@@ -8,31 +8,37 @@ AI Agent Toolkit contains modular skill definitions that can be installed at use
 
 ## Available Skills
 
-### Development Practices
+### Core Workflow
 
 - **ai-pair-programming** - Collaborate effectively through pair programming practices
+- **commit-message** - Write clear and meaningful commit messages
+- **git-workflow** - Manage version control and branching strategies
 - **code-review** - Conduct thorough and constructive code reviews
 - **debugging** - Systematically identify and resolve bugs
-- **git-workflow** - Manage version control and branching strategies
-- **commit-message** - Write clear and meaningful commit messages
 
-### API & Backend
+### Backend & Services
 
 - **api-design** - Design RESTful and GraphQL APIs following best practices
 - **api-mocking** - Create mock APIs for testing and development
 - **database-design** - Design efficient and scalable database schemas
 - **database-management** - Manage database operations, migrations, and queries
 
-### Platform-Specific
+### Mobile
 
 - **android-development** - Build Android applications with Kotlin/Java
 - **ios-development** - Develop iOS applications with Swift/Objective-C
 - **flutter-development** - Create cross-platform apps with Flutter/Dart
 
-### DevOps & Process
+### DevOps & SRE
 
 - **ci-cd-pipeline** - Set up and manage continuous integration/deployment
+
+### Documentation & DX
+
 - **business-context** - Understand and incorporate business requirements
+
+### AI Agent Ops
+
 - **optimize-prompt** - Improve AI prompts for better results
 
 ## Installation Scopes
