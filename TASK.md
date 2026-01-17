@@ -3,9 +3,9 @@
 ## Progress Summary
 
 - **Total Skills**: 55
-- **Completed**: 15/55 (27%)
+- **Completed**: 19/55 (35%)
 - **In Progress**: 0/55 (0%)
-- **Remaining**: 40/55 (73%)
+- **Remaining**: 36/55 (65%)
 
 ### Milestone Progress
 
@@ -17,6 +17,9 @@
   - Documentation & DX: 1/1
   - AI Agent Ops: 1/1
 
+- **Phase 2 (Architectural Foundations)**: 4/4 (100%) ✅ Complete
+  - Architecture & Design: 4/4
+
 ## Core Workflow
 
 - [x] ai-pair-programming - Implement AI pair programming skill
@@ -27,10 +30,10 @@
 
 ## Architecture & Design
 
-- [ ] system-design - Outline system components, data flow, scalability considerations
-- [ ] domain-modeling - Define entities, relationships, and bounded contexts
-- [ ] event-driven-architecture - Plan async messaging and pub/sub patterns
-- [ ] api-versioning - Establish versioning strategy and deprecation policy
+- [x] system-design - Outline system components, data flow, scalability considerations
+- [x] domain-modeling - Define entities, relationships, and bounded contexts
+- [x] event-driven-architecture - Plan async messaging and pub/sub patterns
+- [x] api-versioning - Establish versioning strategy and deprecation policy
 
 ## Backend & Services
 
