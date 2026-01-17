@@ -56,10 +56,10 @@ AI Agent Toolkit contains modular skill definitions that can be installed at use
 ### DevOps & SRE
 
 - [ci-cd-pipeline](skills/ci-cd-pipeline/SKILL.md) - Fast feedback, artifacts, progressive rollout, OIDC secrets
-- infrastructure-as-code - Declarative infra with Terraform/Pulumi and GitOps
-- containers-kubernetes - Docker images, orchestration, and scaling
-- observability - Logs, metrics, traces, SLOs, and alerting
-- incident-response - Runbooks, on-call, and postmortems
+- [infrastructure-as-code](skills/infrastructure-as-code/SKILL.md) - Terraform, Pulumi, GitOps workflows, state management
+- [containers-kubernetes](skills/containers-kubernetes/SKILL.md) - Docker best practices, K8s resources, Helm, Kustomize
+- [observability](skills/observability/SKILL.md) - Structured logging, Prometheus metrics, OpenTelemetry tracing, SLOs
+- [incident-response](skills/incident-response/SKILL.md) - Severity levels, on-call rotation, runbooks, blameless postmortems
 
 ### Security & Compliance
 
@@ -100,9 +100,10 @@ AI Agent Toolkit contains modular skill definitions that can be installed at use
 
 ## Progress Overview
 
-- **Completed**: 27/55 skills (49%)
+- **Completed**: 31/55 skills (56%)
 - **Phase 1 (Core Skills)**: 15/15 ✅ Complete
 - **Phase 2 (Architectural Foundations)**: 4/4 ✅ Complete
+- **Phase 5 (DevOps & Infrastructure)**: 4/4 ✅ Complete
 - **Frontend Web**: 6/6 ✅ Complete
 
 ## Installation Scopes

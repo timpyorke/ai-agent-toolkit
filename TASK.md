@@ -3,9 +3,9 @@
 ## Progress Summary
 
 - **Total Skills**: 55
-- **Completed**: 27/55 (49%)
+- **Completed**: 31/55 (56%)
 - **In Progress**: 0/55 (0%)
-- **Remaining**: 28/55 (51%)
+- **Remaining**: 24/55 (44%)
 
 ### Milestone Progress
 
@@ -19,6 +19,12 @@
 
 - **Phase 2 (Architectural Foundations)**: 4/4 (100%) ✅ Complete
   - Architecture & Design: 4/4
+
+- **Phase 5 (DevOps & Infrastructure)**: 4/4 (100%) ✅ Complete
+  - Infrastructure as Code: 1/1
+  - Containers & Kubernetes: 1/1
+  - Observability: 1/1
+  - Incident Response: 1/1
 
 ## Core Workflow
 
@@ -68,10 +74,10 @@
 ## DevOps & SRE
 
 - [x] ci-cd-pipeline - Implement CI/CD pipeline skill
-- [ ] infrastructure-as-code - Terraform/Pulumi and GitOps workflows
-- [ ] containers-kubernetes - Docker/K8s standards and scaling patterns
-- [ ] observability - Logging, metrics, tracing, SLOs, alerting
-- [ ] incident-response - Runbooks, on-call, and postmortems
+- [x] infrastructure-as-code - Terraform/Pulumi and GitOps workflows
+- [x] containers-kubernetes - Docker/K8s standards and scaling patterns
+- [x] observability - Logging, metrics, tracing, SLOs, alerting
+- [x] incident-response - Runbooks, on-call, and postmortems
 
 ## Security & Compliance
 
