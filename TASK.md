@@ -101,3 +101,9 @@ The following areas are planned but not yet scheduled as SKILL implementations. 
 - [ ] contributor-guide - Onboarding and conventions
 - [ ] release-notes - User-facing change communication
 - [ ] code-comments - Intent-revealing comments guidelines
+
+### AI Agent Ops (additional)
+
+- [ ] tool-use - Safely invoking tools, planning, and result verification
+- [ ] multi-agent-orchestration - Role design, handoffs, and coordination
+- [ ] memory-context - Managing context windows, recall, and summarization
