@@ -6,7 +6,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const inquirer = require('inquirer');
 
-const SKILLS_DIR = path.join(__dirname, '..', 'skills');
+const SKILLS_DIR = path.join(__dirname, '..', 'src', 'skills');
 const CATEGORIES_PATH = path.join(SKILLS_DIR, '_categories.json');
 
 // Helper functions

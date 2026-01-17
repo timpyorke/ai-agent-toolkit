@@ -27,7 +27,7 @@
     },
     "files": [
         "bin/",
-        "skills/",
+        "src/skills/",
         "README.md",
         "package.json",
         "scripts/install.sh"
