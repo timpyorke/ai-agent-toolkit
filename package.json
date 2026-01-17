@@ -25,6 +25,13 @@
         "type": "git",
         "url": "https://github.com/timpyorke/ai-agent-toolkit.git"
     },
+    "files": [
+        "bin/",
+        "skills/",
+        "README.md",
+        "package.json",
+        "scripts/install.sh"
+    ],
     "dependencies": {
         "chalk": "^4.1.2",
         "commander": "^11.1.0",
