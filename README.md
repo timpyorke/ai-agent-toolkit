@@ -100,11 +100,6 @@ AI Agent Toolkit contains modular skill definitions that can be installed at use
 
 ## Progress Overview
 
-- **Completed**: 15/15 skills (100%) 🎉
-- **All core mobile skills implemented!**
-
-See detailed checklist in [TASK.md](TASK.md)
-
 ## Installation Scopes
 
 | CLI    | User Scope          | Project Scope     |
@@ -120,15 +115,7 @@ Install skills globally for all projects:
 ```bash
 # Copy skill to user scope
 cp -r skills/ai-pair-programming ~/.claude/skills/
-```
 
-### Project Scope
-
-Install skills for a specific project:
-
-```bash
-# Copy skill to project scope
-mkdir -p .claude/skills
 cp -r skills/code-review .claude/skills/
 ```
 
