@@ -10,36 +10,96 @@ AI Agent Toolkit contains modular skill definitions that can be installed at use
 
 ### Core Workflow
 
-- **ai-pair-programming** - Collaborate effectively through pair programming practices
-- **commit-message** - Write clear and meaningful commit messages
-- **git-workflow** - Manage version control and branching strategies
-- **code-review** - Conduct thorough and constructive code reviews
-- **debugging** - Systematically identify and resolve bugs
+- [ai-pair-programming](skills/ai-pair-programming/SKILL.md)
+- [commit-message](skills/commit-message/SKILL.md)
+- [git-workflow](skills/git-workflow/SKILL.md)
+- [code-review](skills/code-review/SKILL.md)
+- [debugging](skills/debugging/SKILL.md)
+
+### Architecture & Design
+
+- system-design
+- domain-modeling
+- event-driven-architecture
+- api-versioning
 
 ### Backend & Services
 
-- **api-design** - Design RESTful and GraphQL APIs following best practices
-- **api-mocking** - Create mock APIs for testing and development
-- **database-design** - Design efficient and scalable database schemas
-- **database-management** - Manage database operations, migrations, and queries
+- [api-design](skills/api-design/SKILL.md)
+- [api-mocking](skills/api-mocking/SKILL.md)
+- [database-design](skills/database-design/SKILL.md)
+- [database-management](skills/database-management/SKILL.md)
+- caching
+- messaging
+
+### Frontend Web
+
+- react
+- vue
+- angular
+- accessibility
+- performance
 
 ### Mobile
 
-- **android-development** - Build Android applications with Kotlin/Java
+- [android-development](skills/android-development/SKILL.md) - Build Android applications with Kotlin/Java
 - **ios-development** - Develop iOS applications with Swift/Objective-C
 - **flutter-development** - Create cross-platform apps with Flutter/Dart
 
+### Data & ML
+
+- data-pipelines
+- model-serving
+- ml-monitoring
+
 ### DevOps & SRE
 
-- **ci-cd-pipeline** - Set up and manage continuous integration/deployment
+- [ci-cd-pipeline](skills/ci-cd-pipeline/SKILL.md)
+- infrastructure-as-code
+- containers-kubernetes
+- observability
+- incident-response
+
+### Security & Compliance
+
+- secure-coding
+- authn-authz
+- secrets-management
+- owasp-top-10
+- privacy-gdpr
+
+### Testing & Quality
+
+- unit-integration-e2e
+- test-strategy
+- contract-testing
+- property-based-testing
+
+### Performance & Reliability
+
+- profiling
+- load-testing
+- resiliency-patterns
+- chaos-engineering
 
 ### Documentation & DX
 
-- **business-context** - Understand and incorporate business requirements
+- adrs
+- changelogs
+- contributor-guide
+- release-notes
 
 ### AI Agent Ops
 
-- **optimize-prompt** - Improve AI prompts for better results
+- [optimize-prompt](skills/optimize-prompt/SKILL.md)
+- tool-use
+- multi-agent-orchestration
+
+## Progress Overview
+
+- Completed: 13/15 skills
+- Remaining: ios-development, flutter-development
+- See detailed checklist in [TASK.md](TASK.md)
 
 ## Installation Scopes
 
