@@ -33,6 +33,7 @@ git push origin main --tags
 ```
 
 The workflow will:
+
 - Build and pack the npm tarball
 - Publish to npm using `NPM_TOKEN`
 - Create a GitHub Release and attach the tarball artifact
@@ -47,12 +48,13 @@ npm publish
 ## Install from npm (after publish)
 
 ```bash
+# Install the published package
 npm install -g ai-agent-toolkit
 
 # Verify the CLI works
 aat list
 aat info react
-aat copy --all --dest ~/.claude/skills/
+aat copy
 ```
 
 ## Troubleshooting
