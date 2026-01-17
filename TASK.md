@@ -3,9 +3,9 @@
 ## Progress Summary
 
 - **Total Skills**: 55
-- **Completed**: 25/55 (45%)
+- **Completed**: 27/55 (49%)
 - **In Progress**: 0/55 (0%)
-- **Remaining**: 30/55 (55%)
+- **Remaining**: 28/55 (51%)
 
 ### Milestone Progress
 
@@ -41,8 +41,8 @@
 - [x] api-mocking - Implement API mocking skill
 - [x] database-design - Implement database design skill
 - [x] database-management - Implement database management skill
-- [ ] caching - Reduce latency and load with appropriate cache layers
-- [ ] messaging - Async processing and service communication with queues/streams
+- [x] caching - Reduce latency and load with appropriate cache layers
+- [x] messaging - Async processing and service communication with queues/streams
 
 ## Frontend Web
 

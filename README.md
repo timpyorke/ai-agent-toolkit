@@ -29,8 +29,8 @@ AI Agent Toolkit contains modular skill definitions that can be installed at use
 - [api-mocking](skills/api-mocking/SKILL.md) - Contract-first mocks for dev/test (Prism/MSW)
 - [database-design](skills/database-design/SKILL.md) - Schema integrity, indexing, partitioning
 - [database-management](skills/database-management/SKILL.md) - Migrations, backups, tuning, monitoring
-- caching - Reduce latency and load with appropriate cache layers
-- messaging - Async processing and service communication with queues/streams
+- [caching](skills/caching/SKILL.md) - Reduce latency and load with appropriate cache layers
+- [messaging](skills/messaging/SKILL.md) - Async processing and service communication with queues/streams
 
 ### Frontend Web
 
@@ -100,7 +100,7 @@ AI Agent Toolkit contains modular skill definitions that can be installed at use
 
 ## Progress Overview
 
-- **Completed**: 25/55 skills (45%)
+- **Completed**: 27/55 skills (49%)
 - **Phase 1 (Core Skills)**: 15/15 ✅ Complete
 - **Phase 2 (Architectural Foundations)**: 4/4 ✅ Complete
 - **Frontend Web**: 6/6 ✅ Complete
