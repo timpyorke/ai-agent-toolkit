@@ -53,8 +53,8 @@ prism mock openapi.yaml --port 4010
 - GraphQL Tools `addMocksToSchema`
 
 ```js
-import { makeExecutableSchema } from '@graphql-tools/schema';
-import { addMocksToSchema } from '@graphql-tools/mock';
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { addMocksToSchema } from "@graphql-tools/mock";
 
 const sdl = `
   type User { id: ID!, name: String!, email: String! }
@@ -88,14 +88,17 @@ mocks/
 ## Error & Latency Simulation
 
 ```js
-app.get('/users', (req, res) => {
-  const scenario = req.headers['x-mock-scenario'];
-  if (scenario === 'rate-limit') {
-    return res.status(429).json({ error: { code: 'RATE_LIMIT' } });
+app.get("/users", (req, res) => {
+  const scenario = req.headers["x-mock-scenario"];
+  if (scenario === "rate-limit") {
+    return res.status(429).json({ error: { code: "RATE_LIMIT" } });
   }
-  setTimeout(() => {
-    res.json(usersFixture);
-  }, 300 + Math.random() * 700); // 300-1000ms
+  setTimeout(
+    () => {
+      res.json(usersFixture);
+    },
+    300 + Math.random() * 700,
+  ); // 300-1000ms
 });
 ```
 
