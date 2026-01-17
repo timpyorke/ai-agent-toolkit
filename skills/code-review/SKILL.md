@@ -1,11 +1,9 @@
-# 🔍 Code Review Skill
-
 ---
-
 name: code-review
 description: Conduct thorough, constructive, and effective code reviews that improve quality without slowing delivery
-
 ---
+
+# 🔍 Code Review Skill
 
 ## Overview
 

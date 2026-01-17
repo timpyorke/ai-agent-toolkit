@@ -1,11 +1,9 @@
-# 🎯 Optimize Prompt Skill
-
 ---
-
 name: optimize-prompt
 description: Improve AI prompts for better accuracy, relevance, and effectiveness
-
 ---
+
+# 🎯 Optimize Prompt Skill
 
 ## Overview
 

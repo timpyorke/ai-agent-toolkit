@@ -1,11 +1,9 @@
-# 🤖 Android Development Skill
-
 ---
-
 name: android-development
 description: Build robust Android applications with Kotlin, Java, and modern Android development practices
-
 ---
+
+# 🤖 Android Development Skill
 
 ## Overview
 

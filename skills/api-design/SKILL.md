@@ -1,11 +1,9 @@
-# 📐 API Design Skill
-
 ---
-
 name: api-design
 description: Design clear, consistent, secure REST and GraphQL APIs with robust contracts and versioning
-
 ---
+
+# 📐 API Design Skill
 
 ## Overview
 

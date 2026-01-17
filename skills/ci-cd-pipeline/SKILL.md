@@ -1,11 +1,9 @@
-# 🚀 CI/CD Pipeline Skill
-
 ---
-
 name: ci-cd-pipeline
 description: Design and operate fast, reliable CI/CD pipelines with quality gates, secure secrets, and safe deployments
-
 ---
+
+# 🚀 CI/CD Pipeline Skill
 
 ## Overview
 

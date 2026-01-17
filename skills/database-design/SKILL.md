@@ -1,11 +1,9 @@
-# 🗃️ Database Design Skill
-
 ---
-
 name: database-design
 description: Design scalable, consistent, and performant schemas with clear constraints, indexes, and data models
-
 ---
+
+# 🗃️ Database Design Skill
 
 ## Overview
 

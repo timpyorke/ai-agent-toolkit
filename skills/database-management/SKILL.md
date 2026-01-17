@@ -1,11 +1,9 @@
-# 🛡️ Database Management Skill
-
 ---
-
 name: database-management
 description: Operate databases reliably with migrations, backups, performance tuning, monitoring, and security
-
 ---
+
+# 🛡️ Database Management Skill
 
 ## Overview
 

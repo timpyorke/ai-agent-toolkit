@@ -1,11 +1,9 @@
-# 🧪 API Mocking Skill
-
 ---
-
 name: api-mocking
 description: Create realistic API mocks for development, testing, and demos using contract-first approaches
-
 ---
+
+# 🧪 API Mocking Skill
 
 ## Overview
 

@@ -1,11 +1,9 @@
-# 🛠️ Debugging Skill
-
 ---
-
 name: debugging
 description: Systematically identify, reproduce, isolate, and resolve defects with minimal churn
-
 ---
+
+# 🛠️ Debugging Skill
 
 ## Overview
 

@@ -1,11 +1,9 @@
-# 🧭 Business Context Skill
-
 ---
-
 name: business-context
 description: Incorporate business goals, constraints, and stakeholder needs to guide technical decisions effectively
-
 ---
+
+# 🧭 Business Context Skill
 
 ## Overview
 

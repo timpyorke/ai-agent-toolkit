@@ -1,11 +1,9 @@
-# 🤝 AI Pair Programming Skill
-
 ---
-
 name: ai-pair-programming
 description: Collaborate with AI in real-time pair programming sessions for enhanced productivity
-
 ---
+
+# 🤝 AI Pair Programming Skill
 
 ## Overview
 

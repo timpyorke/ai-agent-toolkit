@@ -1,11 +1,9 @@
-# 🌿 Git Workflow Skill
-
 ---
-
 name: git-workflow
 description: Manage version control effectively with clear branching, rebasing, and pull request practices
-
 ---
+
+# 🌿 Git Workflow Skill
 
 ## Overview
 

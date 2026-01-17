@@ -1,11 +1,9 @@
-# 📝 Commit Message Skill
-
 ---
-
 name: commit-message
 description: Write clear, meaningful, and standardized commit messages following best practices
-
 ---
+
+# 📝 Commit Message Skill
 
 ## Overview
 
