@@ -18,10 +18,10 @@ AI Agent Toolkit contains modular skill definitions that can be installed at use
 
 ### Architecture & Design
 
-- system-design - High-level component, data flow, and scalability planning
-- domain-modeling - Entities, relationships, and bounded contexts (DDD)
-- event-driven-architecture - Async messaging, pub/sub, and eventual consistency
-- api-versioning - Backward compatibility, deprecation, and contract evolution
+- [system-design](skills/system-design/SKILL.md) - Scalability patterns, capacity estimation, architectural patterns
+- [domain-modeling](skills/domain-modeling/SKILL.md) - DDD tactical/strategic patterns, entities, value objects, aggregates
+- [event-driven-architecture](skills/event-driven-architecture/SKILL.md) - Event sourcing, CQRS, pub/sub, message brokers, sagas
+- [api-versioning](skills/api-versioning/SKILL.md) - Versioning strategies, deprecation lifecycle, backward compatibility
 
 ### Backend & Services
 
@@ -34,12 +34,12 @@ AI Agent Toolkit contains modular skill definitions that can be installed at use
 
 ### Frontend Web
 
-- react - Component architecture, hooks, patterns, and testing
-- vue - Composition API, components, and ecosystem best practices
-- angular - Modules, DI, RxJS, and enterprise app structure
-- accessibility - WCAG compliance and inclusive UX patterns
-- performance - Rendering, code-splitting, and lighthouse targets
-- state-management - Redux/Pinia/Zustand patterns and data flows
+- [react](skills/react/SKILL.md) - Component architecture, hooks, patterns, and testing
+- [vue](skills/vue/SKILL.md) - Composition API, components, and ecosystem best practices
+- [angular](skills/angular/SKILL.md) - Modules, DI, RxJS, and enterprise app structure
+- [accessibility](skills/accessibility/SKILL.md) - WCAG compliance and inclusive UX patterns
+- [performance](skills/performance/SKILL.md) - Rendering, code-splitting, and lighthouse targets
+- [state-management](skills/state-management/SKILL.md) - Redux/Pinia/Zustand patterns and data flows
 
 ### Mobile
 
@@ -100,6 +100,11 @@ AI Agent Toolkit contains modular skill definitions that can be installed at use
 
 ## Progress Overview
 
+- **Completed**: 25/55 skills (45%)
+- **Phase 1 (Core Skills)**: 15/15 ✅ Complete
+- **Phase 2 (Architectural Foundations)**: 4/4 ✅ Complete
+- **Frontend Web**: 6/6 ✅ Complete
+
 ## Installation Scopes
 
 | CLI    | User Scope          | Project Scope     |
@@ -113,10 +118,9 @@ AI Agent Toolkit contains modular skill definitions that can be installed at use
 Install skills globally for all projects:
 
 ```bash
-# Copy skill to user scope
+# Copy skills to user scope
 cp -r skills/ai-pair-programming ~/.claude/skills/
-
-cp -r skills/code-review .claude/skills/
+cp -r skills/code-review ~/.claude/skills/
 ```
 
 ## Skill Structure

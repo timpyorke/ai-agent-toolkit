@@ -3,9 +3,9 @@
 ## Progress Summary
 
 - **Total Skills**: 55
-- **Completed**: 19/55 (35%)
+- **Completed**: 25/55 (45%)
 - **In Progress**: 0/55 (0%)
-- **Remaining**: 36/55 (65%)
+- **Remaining**: 30/55 (55%)
 
 ### Milestone Progress
 
@@ -46,12 +46,12 @@
 
 ## Frontend Web
 
-- [ ] react - Best practices guide and testing strategy
-- [ ] vue - Composition API and ecosystem standards
-- [ ] angular - Module structure, DI, and RxJS patterns
-- [ ] accessibility - WCAG checklists and audits
-- [ ] performance - Rendering metrics and optimization techniques
-- [ ] state-management - Redux/Pinia/Zustand patterns and data flows
+- [x] react - Best practices guide and testing strategy
+- [x] vue - Composition API and ecosystem standards
+- [x] angular - Module structure, DI, and RxJS patterns
+- [x] accessibility - WCAG checklists and audits
+- [x] performance - Rendering metrics and optimization techniques
+- [x] state-management - Redux/Pinia/Zustand patterns and data flows
 
 ## Mobile
 
