@@ -2,9 +2,9 @@
 
 ## Progress Summary
 
-- **Completed**: 13/15 (87%)
+- **Completed**: 14/15 (93%)
 - **In Progress**: 0/15 (0%)
-- **Remaining**: 2/15 (13%)
+- **Remaining**: 1/15 (7%)
 
 ## Core Workflow
 
@@ -42,7 +42,7 @@
 ## Mobile
 
 - [x] android-development - Implement Android development skill
-- [ ] ios-development - Implement iOS development skill
+- [x] ios-development - Implement iOS development skill (SwiftUI)
 - [ ] flutter-development - Implement Flutter development skill
 
 ## Data & ML
