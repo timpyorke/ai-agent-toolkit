@@ -2,9 +2,9 @@
 
 ## Progress Summary
 
-- **Completed**: 7/15 (47%)
+- **Completed**: 11/15 (73%)
 - **In Progress**: 0/15 (0%)
-- **Remaining**: 8/15 (53%)
+- **Remaining**: 4/15 (27%)
 
 ## Development Practices
 
@@ -16,10 +16,10 @@
 
 ## API & Backend
 
-- [ ] api-design - Implement API design skill
-- [ ] api-mocking - Implement API mocking skill
-- [ ] database-design - Implement database design skill
-- [ ] database-management - Implement database management skill
+- [x] api-design - Implement API design skill
+- [x] api-mocking - Implement API mocking skill
+- [x] database-design - Implement database design skill
+- [x] database-management - Implement database management skill
 
 ## Platform-Specific
 
