@@ -3,6 +3,7 @@
 ## Completed Phases ✅
 
 ### Phase 1: Core Skills (15/15 - 100%)
+
 **Focus**: Essential development workflow and mobile foundations
 
 - ✅ Core Workflow (5/5): ai-pair-programming, commit-message, git-workflow, code-review, debugging
@@ -13,6 +14,7 @@
 - ✅ AI Agent Ops (1/1): optimize-prompt
 
 ### Phase 2: Architectural Foundations (4/4 - 100%)
+
 **Focus**: System design and architecture patterns
 
 - ✅ system-design: Scalability patterns, capacity estimation, architectural patterns
@@ -21,6 +23,7 @@
 - ✅ api-versioning: Versioning strategies, deprecation lifecycle, backward compatibility
 
 ### Phase 3: Frontend Excellence (6/6 - 100%)
+
 **Focus**: Modern web development across frameworks
 
 - ✅ react: Hooks, component patterns, testing, performance
@@ -31,6 +34,7 @@
 - ✅ state-management: Redux Toolkit, Zustand, Pinia, NgRx
 
 ### Phase 4: Backend Services (2/2 - 100%)
+
 **Focus**: Caching and async messaging
 
 - ✅ caching: Cache layers, strategies, invalidation, stampede prevention
@@ -41,11 +45,13 @@
 ## Upcoming Phases 🚀
 
 ### Phase 5: DevOps & Infrastructure (4 skills)
+
 **Priority**: High | **Estimated effort**: 2-3 days
 
 **Goal**: Enable reliable deployment, orchestration, and operational excellence
 
 #### Skills to implement:
+
 1. **infrastructure-as-code** (IaC)
    - Terraform modules and best practices
    - Pulumi for TypeScript/Python infrastructure
@@ -82,11 +88,13 @@
 ---
 
 ### Phase 6: Security & Compliance (5 skills)
+
 **Priority**: High | **Estimated effort**: 2-3 days
 
 **Goal**: Build secure, compliant applications from the ground up
 
 #### Skills to implement:
+
 1. **secure-coding**
    - Input validation and sanitization
    - Output encoding (XSS prevention)
@@ -137,11 +145,13 @@
 ---
 
 ### Phase 7: Testing & Quality (4 skills)
+
 **Priority**: Medium-High | **Estimated effort**: 2 days
 
 **Goal**: Establish comprehensive testing strategies across all layers
 
 #### Skills to implement:
+
 1. **unit-integration-e2e**
    - Unit testing patterns (AAA, Given-When-Then)
    - Test doubles (mocks, stubs, fakes, spies)
@@ -183,11 +193,13 @@
 ---
 
 ### Phase 8: Performance & Reliability (4 skills)
+
 **Priority**: Medium | **Estimated effort**: 2 days
 
 **Goal**: Optimize systems for speed, efficiency, and resilience
 
 #### Skills to implement:
+
 1. **profiling**
    - CPU profiling (flamegraphs, sampling)
    - Memory profiling (heap analysis, leak detection)
@@ -229,11 +241,13 @@
 ---
 
 ### Phase 9: Data & ML (3 skills)
+
 **Priority**: Medium | **Estimated effort**: 1-2 days
 
 **Goal**: Enable data-driven and ML-powered features
 
 #### Skills to implement:
+
 1. **data-pipelines**
    - ETL vs ELT patterns
    - Orchestration with Airflow/Prefect/Dagster
@@ -266,11 +280,13 @@
 ---
 
 ### Phase 10: Documentation & Developer Experience (5 skills)
+
 **Priority**: Low-Medium | **Estimated effort**: 1-2 days
 
 **Goal**: Make codebases understandable, maintainable, and contributor-friendly
 
 #### Skills to implement:
+
 1. **adrs** (Architecture Decision Records)
    - ADR template and structure
    - When to write an ADR
@@ -317,11 +333,13 @@
 ---
 
 ### Phase 11: AI Agent Operations (3 skills)
+
 **Priority**: Low-Medium | **Estimated effort**: 1-2 days
 
 **Goal**: Enhance AI agent capabilities with advanced patterns
 
 #### Skills to implement:
+
 1. **tool-use**
    - Safe tool invocation (validation, timeouts)
    - Planning and reasoning about tool sequences
@@ -352,22 +370,22 @@
 
 ## Milestones Summary
 
-| Phase | Skills | Status | Completion |
-|-------|--------|--------|------------|
-| Phase 1: Core Skills | 15 | ✅ Complete | 100% |
-| Phase 2: Architectural Foundations | 4 | ✅ Complete | 100% |
-| Phase 3: Frontend Excellence | 6 | ✅ Complete | 100% |
-| Phase 4: Backend Services | 2 | ✅ Complete | 100% |
-| **Total Completed** | **27** | | **49%** |
-| Phase 5: DevOps & Infrastructure | 4 | 📋 Planned | 0% |
-| Phase 6: Security & Compliance | 5 | 📋 Planned | 0% |
-| Phase 7: Testing & Quality | 4 | 📋 Planned | 0% |
-| Phase 8: Performance & Reliability | 4 | 📋 Planned | 0% |
-| Phase 9: Data & ML | 3 | 📋 Planned | 0% |
-| Phase 10: Documentation & DX | 5 | 📋 Planned | 0% |
-| Phase 11: AI Agent Operations | 3 | 📋 Planned | 0% |
-| **Total Remaining** | **28** | | **51%** |
-| **Grand Total** | **55** | | |
+| Phase                              | Skills | Status      | Completion |
+| ---------------------------------- | ------ | ----------- | ---------- |
+| Phase 1: Core Skills               | 15     | ✅ Complete | 100%       |
+| Phase 2: Architectural Foundations | 4      | ✅ Complete | 100%       |
+| Phase 3: Frontend Excellence       | 6      | ✅ Complete | 100%       |
+| Phase 4: Backend Services          | 2      | ✅ Complete | 100%       |
+| **Total Completed**                | **27** |             | **49%**    |
+| Phase 5: DevOps & Infrastructure   | 4      | 📋 Planned  | 0%         |
+| Phase 6: Security & Compliance     | 5      | 📋 Planned  | 0%         |
+| Phase 7: Testing & Quality         | 4      | 📋 Planned  | 0%         |
+| Phase 8: Performance & Reliability | 4      | 📋 Planned  | 0%         |
+| Phase 9: Data & ML                 | 3      | 📋 Planned  | 0%         |
+| Phase 10: Documentation & DX       | 5      | 📋 Planned  | 0%         |
+| Phase 11: AI Agent Operations      | 3      | 📋 Planned  | 0%         |
+| **Total Remaining**                | **28** |             | **51%**    |
+| **Grand Total**                    | **55** |             |            |
 
 ---
 
@@ -376,6 +394,7 @@
 ### Immediate Priority: Phase 5 (DevOps & Infrastructure)
 
 Start with **Phase 5** because:
+
 1. **High impact**: These skills unlock production readiness for all previous skills
 2. **Natural progression**: Following backend/frontend with deployment and operations
 3. **Dependency chain**: Observability and incident response build on existing ci-cd-pipeline skill
