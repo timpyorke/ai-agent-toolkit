@@ -43,13 +43,12 @@ AI Agent Toolkit contains modular skill definitions that can be installed at use
 
 ### Mobile
 
-- [android-development](skills/android-development/SKILL.md) - Build Android applications with Kotlin/Java, Jetpack, Compose, MVVM, Hilt, Room, Retrofit
-- **ios-development** - SwiftUI/UIKit, Combine, architecture, networking, persistence
-- **flutter-development** - Dart, widgets, state management, platform integration
+- [android-development](skills/android-development/SKILL.md) - Kotlin, Jetpack, Compose, MVVM, Hilt, Room, Retrofit
+- [ios-development](skills/ios-development/SKILL.md) - SwiftUI/UIKit, Combine, architecture, networking, persistence
+- [flutter-development](skills/flutter-development/SKILL.md) - Dart, MVVM + Clean Architecture, Riverpod/Bloc, platform integration
 
 ### Data & ML
 
-- data-pipelines
 - data-pipelines - ETL/ELT workflows, orchestration, and data quality
 - model-serving - Deploying models to APIs, batch jobs, or streaming
 - ml-monitoring - Drift, performance, and fairness monitoring
@@ -98,8 +97,11 @@ AI Agent Toolkit contains modular skill definitions that can be installed at use
 - tool-use - Safely invoking tools, planning, and result verification
 - multi-agent-orchestration - Role design, handoffs, and coordination
 - memory-context - Managing context windows, recall, and summarization
-- Completed: 13/15 skills
-- Remaining: ios-development, flutter-development
+
+## Progress Overview
+
+- **Completed**: 15/15 skills (100%) 🎉
+- **All core mobile skills implemented!**
 
 See detailed checklist in [TASK.md](TASK.md)
 
