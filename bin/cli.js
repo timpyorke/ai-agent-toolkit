@@ -196,25 +196,78 @@ program
             } else {
                 // Interactive selection
                 const skills = getSkills();
-                const choices = skills.map(skill => {
-                    const info = getSkillInfo(skill);
-                    return {
-                        name: info ? `${info.name} - ${info.description}` : skill,
-                        value: skill,
-                    };
-                });
+                const categories = (typeof loadCategories === 'function') ? loadCategories() : null;
 
+                // Build grouped choices with separators when categories exist
+                let choices = [];
+                if (categories) {
+                    for (const [category, members] of Object.entries(categories)) {
+                        const existing = members.filter(m => skills.includes(m));
+                        if (!existing.length) continue;
+
+                        choices.push(new inquirer.Separator(`── ${category} ──`));
+                        for (const skill of existing) {
+                            const info = getSkillInfo(skill);
+                            choices.push({
+                                name: info ? `${info.name}${info.description ? ' - ' + info.description : ''}` : skill,
+                                value: skill,
+                                short: info ? info.name : skill,
+                            });
+                        }
+                    }
+
+                    // Add uncategorized skills
+                    const listed = new Set(Object.values(categories).flat());
+                    const unlisted = skills.filter(s => !listed.has(s));
+                    if (unlisted.length) {
+                        choices.push(new inquirer.Separator('── Uncategorized ──'));
+                        for (const skill of unlisted) {
+                            const info = getSkillInfo(skill);
+                            choices.push({
+                                name: info ? `${info.name}${info.description ? ' - ' + info.description : ''}` : skill,
+                                value: skill,
+                                short: info ? info.name : skill,
+                            });
+                        }
+                    }
+                } else {
+                    // Flat choices fallback
+                    choices = skills.map(skill => {
+                        const info = getSkillInfo(skill);
+                        return {
+                            name: info ? `${info.name}${info.description ? ' - ' + info.description : ''}` : skill,
+                            value: skill,
+                            short: info ? info.name : skill,
+                        };
+                    });
+                }
+
+                console.log(chalk.gray('\nUse Space to select, Enter to confirm. Press "a" to toggle all, "i" to invert selection.'));
                 const answers = await inquirer.prompt([
                     {
                         type: 'checkbox',
                         name: 'skills',
                         message: 'Select skills to copy:',
                         choices,
-                        pageSize: 15,
+                        pageSize: 20,
+                        validate: (input) => (input && input.length > 0) ? true : 'Select at least one skill',
                     },
                 ]);
 
                 skillsToCopy = answers.skills;
+                console.log(chalk.cyan(`\nSelected: ${skillsToCopy.length} skill(s)`));
+                const proceed = await inquirer.prompt([
+                    {
+                        type: 'confirm',
+                        name: 'confirm',
+                        message: 'Proceed to copy selected skills?',
+                        default: true,
+                    },
+                ]);
+                if (!proceed.confirm) {
+                    console.log(chalk.yellow('Copy cancelled'));
+                    return;
+                }
             }
 
             if (skillsToCopy.length === 0) {
