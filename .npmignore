@@ -1,0 +1,23 @@
+# Git
+.git
+.gitignore
+
+# Documentation (keep README)
+ROADMAP.md
+TASK.md
+CONTRIBUTING.md
+
+# IDE
+.vscode
+.idea
+
+# macOS
+.DS_Store
+
+# Node
+node_modules
+npm-debug.log
+
+# Test
+test
+*.test.js

@@ -153,6 +153,38 @@ When [triggering condition], always follow these steps:
 - Another thing to avoid
 ```
 
+## CLI Tool
+
+Install the CLI tool to easily manage and deploy skills:
+
+```bash
+# Install globally using npm
+npm install -g .
+
+# Or use the install script
+chmod +x scripts/install.sh
+./scripts/install.sh
+```
+
+### CLI Commands
+
+```bash
+# List all available skills
+aat list
+
+# Show detailed info about a skill
+aat info react
+
+# Copy skills interactively (with prompts)
+aat copy
+
+# Copy all skills to user scope
+aat copy --all --dest ~/.claude/skills/
+
+# Copy specific skills
+aat copy --skills react vue angular --dest ./.claude/skills/
+```
+
 ## Usage
 
 Once installed, skills are automatically available to the AI agent when working within the configured scope. The agent will reference the skill instructions when appropriate for the task at hand.
