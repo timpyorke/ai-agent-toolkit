@@ -10,18 +10,21 @@ Master the art of building robust, performant, and delightful iOS applications u
 ## Core Principles
 
 ### 1. SwiftUI-First Approach
+
 - **Declarative UI**: Build interfaces by describing what they should look like
 - **State-driven**: UI automatically updates when state changes
 - **Composability**: Break down complex views into smaller, reusable components
 - **Preview-driven development**: Iterate quickly with Xcode previews
 
 ### 2. Architecture Excellence
+
 - **Separation of concerns**: Decouple UI, business logic, and data layers
 - **Testability**: Design for unit and UI testing from the start
 - **Scalability**: Support growing teams and feature sets
 - **Maintainability**: Write code that's easy to understand and modify
 
 ### 3. Apple Ecosystem Integration
+
 - **Platform conventions**: Follow Human Interface Guidelines (HIG)
 - **System features**: Leverage native capabilities (Face ID, HealthKit, etc.)
 - **Cross-platform**: Share code with macOS, watchOS, tvOS when appropriate
@@ -38,25 +41,25 @@ final class ProfileViewModel {
     var user: User
     var isLoading = false
     var errorMessage: String?
-    
+
     private let userService: UserServiceProtocol
-    
+
     init(user: User, userService: UserServiceProtocol = UserService()) {
         self.user = user
         self.userService = userService
     }
-    
+
     @MainActor
     func updateProfile() async {
         isLoading = true
         errorMessage = nil
-        
+
         do {
             user = try await userService.updateUser(user)
         } catch {
             errorMessage = error.localizedDescription
         }
-        
+
         isLoading = false
     }
 }
@@ -65,11 +68,11 @@ final class ProfileViewModel {
 struct ProfileView: View {
     @State private var viewModel: ProfileViewModel
     @Environment(\.dismiss) private var dismiss
-    
+
     init(user: User) {
         _viewModel = State(wrappedValue: ProfileViewModel(user: user))
     }
-    
+
     var body: some View {
         Form {
             Section("Personal Information") {
@@ -78,7 +81,7 @@ struct ProfileView: View {
                     .keyboardType(.emailAddress)
                     .textInputAutocapitalization(.never)
             }
-            
+
             Section {
                 Button("Save Changes") {
                     Task {
@@ -119,7 +122,7 @@ struct ProfileView: View {
 // MARK: - Custom Button Style
 struct PrimaryButtonStyle: ButtonStyle {
     @Environment(\.isEnabled) private var isEnabled
-    
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.headline)
@@ -158,12 +161,12 @@ struct CheckoutView: View {
 final class AppCoordinator {
     var navigationPath = NavigationPath()
     var presentedSheet: SheetDestination?
-    
+
     enum SheetDestination: Identifiable {
         case settings
         case profile(User)
         case createPost
-        
+
         var id: String {
             switch self {
             case .settings: return "settings"
@@ -172,19 +175,19 @@ final class AppCoordinator {
             }
         }
     }
-    
+
     func navigate(to screen: Screen) {
         navigationPath.append(screen)
     }
-    
+
     func presentSheet(_ sheet: SheetDestination) {
         presentedSheet = sheet
     }
-    
+
     func pop() {
         navigationPath.removeLast()
     }
-    
+
     func popToRoot() {
         navigationPath = NavigationPath()
     }
@@ -194,7 +197,7 @@ final class AppCoordinator {
 @main
 struct MyApp: App {
     @State private var coordinator = AppCoordinator()
-    
+
     var body: some Scene {
         WindowGroup {
             NavigationStack(path: $coordinator.navigationPath) {
@@ -224,25 +227,25 @@ final class FeedViewModel: ObservableObject {
     @Published var posts: [Post] = []
     @Published var isLoading = false
     @Published var error: Error?
-    
+
     private let postRepository: PostRepositoryProtocol
     private var cancellables = Set<AnyCancellable>()
-    
+
     init(postRepository: PostRepositoryProtocol = PostRepository()) {
         self.postRepository = postRepository
         observePosts()
     }
-    
+
     private func observePosts() {
         postRepository.postsPublisher
             .receive(on: DispatchQueue.main)
             .assign(to: &$posts)
     }
-    
+
     func loadPosts() {
         isLoading = true
         error = nil
-        
+
         postRepository.fetchPosts()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
@@ -277,10 +280,10 @@ final class Task {
     var isCompleted: Bool
     var dueDate: Date?
     var priority: Priority
-    
+
     @Relationship(deleteRule: .cascade)
     var subtasks: [Subtask]
-    
+
     init(title: String, priority: Priority = .medium) {
         self.id = UUID()
         self.title = title
@@ -288,7 +291,7 @@ final class Task {
         self.priority = priority
         self.subtasks = []
     }
-    
+
     enum Priority: String, Codable {
         case low, medium, high
     }
@@ -298,7 +301,7 @@ final class Task {
 struct TaskListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Task.dueDate) private var tasks: [Task]
-    
+
     var body: some View {
         List {
             ForEach(tasks) { task in
@@ -312,12 +315,12 @@ struct TaskListView: View {
             }
         }
     }
-    
+
     private func addTask() {
         let task = Task(title: "New Task")
         modelContext.insert(task)
     }
-    
+
     private func deleteTasks(at offsets: IndexSet) {
         for index in offsets {
             modelContext.delete(tasks[index])
@@ -339,27 +342,27 @@ protocol APIClient {
 final class NetworkAPIClient: APIClient {
     private let session: URLSession
     private let decoder: JSONDecoder
-    
+
     init(session: URLSession = .shared) {
         self.session = session
         self.decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         decoder.dateDecodingStrategy = .iso8601
     }
-    
+
     func request<T: Decodable>(_ endpoint: Endpoint) async throws -> T {
         let request = try endpoint.makeRequest()
-        
+
         let (data, response) = try await session.data(for: request)
-        
+
         guard let httpResponse = response as? HTTPURLResponse else {
             throw NetworkError.invalidResponse
         }
-        
+
         guard (200...299).contains(httpResponse.statusCode) else {
             throw NetworkError.httpError(httpResponse.statusCode)
         }
-        
+
         do {
             return try decoder.decode(T.self, from: data)
         } catch {
@@ -375,30 +378,30 @@ struct Endpoint {
     let headers: [String: String]?
     let body: Encodable?
     let queryItems: [URLQueryItem]?
-    
+
     func makeRequest() throws -> URLRequest {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "api.example.com"
         components.path = path
         components.queryItems = queryItems
-        
+
         guard let url = components.url else {
             throw NetworkError.invalidURL
         }
-        
+
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
-        
+
         headers?.forEach { request.setValue($1, forHTTPHeaderField: $0) }
-        
+
         if let body = body {
             let encoder = JSONEncoder()
             encoder.keyEncodingStrategy = .convertToSnakeCase
             request.httpBody = try encoder.encode(body)
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         }
-        
+
         return request
     }
 }
@@ -415,7 +418,7 @@ enum NetworkError: LocalizedError {
     case invalidResponse
     case httpError(Int)
     case decodingError(Error)
-    
+
     var errorDescription: String? {
         switch self {
         case .invalidURL:
@@ -442,7 +445,7 @@ import XCTest
 final class ProfileViewModelTests: XCTestCase {
     var sut: ProfileViewModel!
     var mockUserService: MockUserService!
-    
+
     override func setUp() {
         super.setUp()
         mockUserService = MockUserService()
@@ -451,34 +454,34 @@ final class ProfileViewModelTests: XCTestCase {
             userService: mockUserService
         )
     }
-    
+
     override func tearDown() {
         sut = nil
         mockUserService = nil
         super.tearDown()
     }
-    
+
     func testUpdateProfile_Success() async {
         // Given
         let updatedUser = User(id: "1", name: "Updated", email: "test@example.com")
         mockUserService.updateUserResult = .success(updatedUser)
-        
+
         // When
         await sut.updateProfile()
-        
+
         // Then
         XCTAssertEqual(sut.user.name, "Updated")
         XCTAssertFalse(sut.isLoading)
         XCTAssertNil(sut.errorMessage)
     }
-    
+
     func testUpdateProfile_Failure() async {
         // Given
         mockUserService.updateUserResult = .failure(NetworkError.invalidResponse)
-        
+
         // When
         await sut.updateProfile()
-        
+
         // Then
         XCTAssertNotNil(sut.errorMessage)
         XCTAssertFalse(sut.isLoading)
@@ -488,7 +491,7 @@ final class ProfileViewModelTests: XCTestCase {
 // MARK: - Mock
 final class MockUserService: UserServiceProtocol {
     var updateUserResult: Result<User, Error>!
-    
+
     func updateUser(_ user: User) async throws -> User {
         switch updateUserResult {
         case .success(let user):
@@ -509,7 +512,7 @@ import XCTest
 
 final class LoginUITests: XCTestCase {
     var app: XCUIApplication!
-    
+
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
@@ -517,30 +520,30 @@ final class LoginUITests: XCTestCase {
         app.launchArguments = ["UI-Testing"]
         app.launch()
     }
-    
+
     func testSuccessfulLogin() {
         // Given
         let emailField = app.textFields["Email"]
         let passwordField = app.secureTextFields["Password"]
         let loginButton = app.buttons["Login"]
-        
+
         // When
         emailField.tap()
         emailField.typeText("test@example.com")
-        
+
         passwordField.tap()
         passwordField.typeText("password123")
-        
+
         loginButton.tap()
-        
+
         // Then
         XCTAssertTrue(app.navigationBars["Home"].waitForExistence(timeout: 5))
     }
-    
+
     func testLoginWithEmptyFields() {
         // When
         app.buttons["Login"].tap()
-        
+
         // Then
         XCTAssertTrue(app.alerts["Error"].exists)
     }
@@ -555,7 +558,7 @@ final class LoginUITests: XCTestCase {
 // ✅ Use @State for view-local state
 struct CounterView: View {
     @State private var count = 0
-    
+
     var body: some View {
         VStack {
             Text("Count: \(count)")
@@ -576,7 +579,7 @@ final class AppState {
 // ✅ Use @Environment for dependency injection
 struct ContentView: View {
     @Environment(AppState.self) private var appState
-    
+
     var body: some View {
         if appState.isAuthenticated {
             HomeView()
@@ -606,14 +609,14 @@ func statusView(for order: Order) -> some View {
 // ✅ Use equatable for performance
 struct ProductCard: View, Equatable {
     let product: Product
-    
+
     var body: some View {
         VStack {
             AsyncImage(url: product.imageURL)
             Text(product.name)
         }
     }
-    
+
     static func == (lhs: ProductCard, rhs: ProductCard) -> Bool {
         lhs.product.id == rhs.product.id
     }
@@ -622,7 +625,7 @@ struct ProductCard: View, Equatable {
 // ✅ Use task modifier for async work
 struct FeedView: View {
     @State private var viewModel = FeedViewModel()
-    
+
     var body: some View {
         List(viewModel.posts) { post in
             PostRow(post: post)
@@ -640,7 +643,7 @@ struct FeedView: View {
 struct AccessibleButton: View {
     let title: String
     let action: () -> Void
-    
+
     var body: some View {
         Button(action: action) {
             Text(title)
@@ -654,7 +657,7 @@ struct AccessibleButton: View {
 // Custom controls
 struct RatingView: View {
     @Binding var rating: Int
-    
+
     var body: some View {
         HStack {
             ForEach(1...5, id: \.self) { index in
@@ -689,7 +692,7 @@ enum ValidationError: LocalizedError {
     case emptyEmail
     case invalidEmailFormat
     case passwordTooShort
-    
+
     var errorDescription: String? {
         switch self {
         case .emptyEmail:
@@ -700,7 +703,7 @@ enum ValidationError: LocalizedError {
             return "Password must be at least 8 characters"
         }
     }
-    
+
     var recoverySuggestion: String? {
         switch self {
         case .emptyEmail, .invalidEmailFormat:
@@ -715,7 +718,7 @@ enum ValidationError: LocalizedError {
 struct ErrorView: View {
     let error: Error
     let retry: () -> Void
-    
+
     var body: some View {
         ContentUnavailableView {
             Label("Error", systemImage: "exclamationmark.triangle")
@@ -743,7 +746,7 @@ enum LoadingState<T> {
 struct ContentView<T>: View {
     let state: LoadingState<T>
     let content: (T) -> some View
-    
+
     var body: some View {
         switch state {
         case .idle:
@@ -785,7 +788,7 @@ extension EnvironmentValues {
 // Usage
 struct LoginView: View {
     @Environment(\.authService) private var authService
-    
+
     var body: some View {
         Button("Login") {
             Task {
@@ -833,7 +836,7 @@ extension View {
 enum BuildConfiguration {
     case debug
     case release
-    
+
     static var current: BuildConfiguration {
         #if DEBUG
         return .debug
@@ -841,7 +844,7 @@ enum BuildConfiguration {
         return .release
         #endif
     }
-    
+
     var apiBaseURL: String {
         switch self {
         case .debug:
@@ -878,7 +881,7 @@ enum BuildConfiguration {
         for: Task.self,
         configurations: ModelConfiguration(isStoredInMemoryOnly: true)
     )
-    
+
     return TaskListView()
         .modelContainer(container)
 }
@@ -988,4 +991,4 @@ await withTaskGroup(of: Post.self) { group in
 
 ---
 
-*Building exceptional iOS experiences requires mastering SwiftUI, understanding platform conventions, and continuously learning as the ecosystem evolves.*
+_Building exceptional iOS experiences requires mastering SwiftUI, understanding platform conventions, and continuously learning as the ecosystem evolves._
