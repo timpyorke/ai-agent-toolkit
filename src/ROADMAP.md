@@ -40,109 +40,28 @@
 - ✅ caching: Cache layers, strategies, invalidation, stampede prevention
 - ✅ messaging: Queues, topics, delivery semantics, idempotency, DLQ, outbox
 
+### Phase 5: DevOps & Infrastructure (4/4 - 100%)
+
+**Focus**: Enable reliable deployment, orchestration, and operational excellence
+
+- ✅ infrastructure-as-code: Terraform modules, Pulumi, GitOps, state management
+- ✅ containers-kubernetes: Dockerfile best practices, K8s resources, Helm, HPA
+- ✅ observability: Structured logging, Prometheus metrics, OpenTelemetry, SLIs/SLOs
+- ✅ incident-response: On-call rotation, runbooks, postmortems, root cause analysis
+
+### Phase 6: Security & Compliance (5/5 - 100%)
+
+**Focus**: Build secure, compliant applications from the ground up
+
+- ✅ secure-coding: Input validation, output encoding, SQL injection prevention, CSRF
+- ✅ authn-authz: OAuth2/OIDC, RBAC/ABAC models, MFA, session management
+- ✅ secrets-management: Vault/KMS, rotation policies, least privilege, leak scanning
+- ✅ owasp-top-10: Mitigation strategies for critical web vulnerabilities
+- ✅ privacy-gdpr: Data minimization, consent management, user rights, "right to be forgotten"
+
 ---
 
 ## Upcoming Phases 🚀
-
-### Phase 5: DevOps & Infrastructure (4 skills)
-
-**Priority**: High | **Estimated effort**: 2-3 days
-
-**Goal**: Enable reliable deployment, orchestration, and operational excellence
-
-#### Skills to implement:
-
-1. **infrastructure-as-code** (IaC)
-   - Terraform modules and best practices
-   - Pulumi for TypeScript/Python infrastructure
-   - GitOps workflows with ArgoCD/Flux
-   - State management and remote backends
-   - Workspace organization and modules
-
-2. **containers-kubernetes** (K8s)
-   - Dockerfile best practices (multi-stage, layer optimization)
-   - Kubernetes resources (Pods, Deployments, Services, Ingress)
-   - ConfigMaps and Secrets management
-   - Health checks (liveness, readiness, startup probes)
-   - Resource limits and HPA
-   - Helm charts and Kustomize
-
-3. **observability**
-   - Structured logging (JSON, correlation IDs)
-   - Metrics with Prometheus (RED/USE methods)
-   - Distributed tracing with OpenTelemetry
-   - SLIs, SLOs, and error budgets
-   - Alerting rules and runbooks
-   - Dashboards (Grafana)
-
-4. **incident-response**
-   - On-call rotation and escalation policies
-   - Incident severity levels
-   - Runbooks and playbooks
-   - Post-incident reviews (blameless postmortems)
-   - Incident communication templates
-   - Root cause analysis (5 Whys, fishbone diagrams)
-
-**Why this phase**: With 27 skills implemented, the toolkit needs operational maturity. These skills enable teams to deploy, monitor, and maintain production systems reliably.
-
----
-
-### Phase 6: Security & Compliance (5 skills)
-
-**Priority**: High | **Estimated effort**: 2-3 days
-
-**Goal**: Build secure, compliant applications from the ground up
-
-#### Skills to implement:
-
-1. **secure-coding**
-   - Input validation and sanitization
-   - Output encoding (XSS prevention)
-   - Parameterized queries (SQL injection prevention)
-   - Secure password storage (bcrypt, Argon2)
-   - CSRF protection
-   - Security headers (CSP, HSTS, X-Frame-Options)
-
-2. **authn-authz**
-   - Authentication flows (session, JWT, OAuth2, OIDC)
-   - Password reset and MFA
-   - Authorization models (RBAC, ABAC, ReBAC)
-   - Permission design patterns
-   - Token management and rotation
-   - Single sign-on (SSO)
-
-3. **secrets-management**
-   - Vault/AWS Secrets Manager/Azure Key Vault
-   - Secret rotation policies
-   - Least privilege access
-   - Encryption at rest and in transit
-   - Environment variable best practices
-   - Git secrets scanning (pre-commit hooks)
-
-4. **owasp-top-10**
-   - Broken access control
-   - Cryptographic failures
-   - Injection attacks
-   - Insecure design
-   - Security misconfiguration
-   - Vulnerable and outdated components
-   - Identification and authentication failures
-   - Software and data integrity failures
-   - Security logging and monitoring failures
-   - Server-side request forgery (SSRF)
-
-5. **privacy-gdpr**
-   - Data minimization and purpose limitation
-   - Consent management (opt-in/opt-out)
-   - Right to access, rectification, erasure
-   - Data portability
-   - Privacy by design
-   - Data processing agreements (DPA)
-   - Cookie consent and tracking
-
-**Why this phase**: Security cannot be an afterthought. These skills ensure teams build trustworthy, compliant systems.
-
----
 
 ### Phase 7: Testing & Quality (4 skills)
 
@@ -376,72 +295,65 @@
 | Phase 2: Architectural Foundations | 4      | ✅ Complete | 100%       |
 | Phase 3: Frontend Excellence       | 6      | ✅ Complete | 100%       |
 | Phase 4: Backend Services          | 2      | ✅ Complete | 100%       |
-| **Total Completed**                | **27** |             | **49%**    |
-| Phase 5: DevOps & Infrastructure   | 4      | 📋 Planned  | 0%         |
-| Phase 6: Security & Compliance     | 5      | 📋 Planned  | 0%         |
+| Phase 5: DevOps & Infrastructure   | 4      | ✅ Complete | 100%       |
+| Phase 6: Security & Compliance     | 5      | ✅ Complete | 100%       |
+| **Total Completed**                | **36** |             | **65%**    |
 | Phase 7: Testing & Quality         | 4      | 📋 Planned  | 0%         |
 | Phase 8: Performance & Reliability | 4      | 📋 Planned  | 0%         |
 | Phase 9: Data & ML                 | 3      | 📋 Planned  | 0%         |
 | Phase 10: Documentation & DX       | 5      | 📋 Planned  | 0%         |
 | Phase 11: AI Agent Operations      | 3      | 📋 Planned  | 0%         |
-| **Total Remaining**                | **28** |             | **51%**    |
+| **Total Remaining**                | **19** |             | **35%**    |
 | **Grand Total**                    | **55** |             |            |
 
 ---
 
 ## Recommended Next Steps
 
-### Immediate Priority: Phase 5 (DevOps & Infrastructure)
+### Immediate Priority: Phase 7 (Testing & Quality)
 
-Start with **Phase 5** because:
+Start with **Phase 7** because:
 
-1. **High impact**: These skills unlock production readiness for all previous skills
-2. **Natural progression**: Following backend/frontend with deployment and operations
-3. **Dependency chain**: Observability and incident response build on existing ci-cd-pipeline skill
-4. **Real-world need**: Teams need to deploy, monitor, and maintain systems reliably
+1. **Confidence**: Comprehensive testing enables safer refactoring and feature additions.
+2. **Stability**: Catch regressions before they reach production.
+3. **Speed**: Automated tests (unit/integration) speed up the dev cycle compared to manual QA.
+4. **Foundation**: Good testing practices support future phases like Performance and Reliability.
 
 ### Suggested Implementation Order:
 
 ```bash
-# Week 1: DevOps & Infrastructure
-Day 1-2: infrastructure-as-code (Terraform, Pulumi, GitOps)
-Day 3-4: containers-kubernetes (Docker, K8s, Helm)
-Day 5-6: observability (logging, metrics, tracing, SLOs)
-Day 7: incident-response (on-call, runbooks, postmortems)
+# Week 1: Testing & Quality
+Day 1: unit-integration-e2e (Testing pyramid, patterns)
+Day 2: test-strategy (Coverage, flakiness, data management)
+Day 3: contract-testing (Pact, schema validation)
+Day 4: property-based-testing (Generative testing)
 
-# Week 2: Security & Compliance
-Day 1: secure-coding (input validation, output encoding)
-Day 2: authn-authz (auth flows, RBAC/ABAC)
-Day 3: secrets-management (Vault, rotation)
-Day 4: owasp-top-10 (vulnerabilities and mitigations)
-Day 5: privacy-gdpr (consent, data rights)
+# Week 2: Performance & Reliability
+Day 1: profiling (CPU/Memory analysis)
+Day 2: load-testing (Capacity planning)
+Day 3: resiliency-patterns (Circuit breakers, retries)
+Day 4: chaos-engineering (Failure injection)
 
-# Week 3: Testing & Performance
-Day 1-2: unit-integration-e2e, test-strategy
-Day 3: contract-testing, property-based-testing
-Day 4: profiling, load-testing
-Day 5: resiliency-patterns, chaos-engineering
-
-# Week 4: Data/ML & Documentation
+# Week 3: Data/ML & Documentation
 Day 1-2: data-pipelines, model-serving, ml-monitoring
-Day 3-4: adrs, changelogs, contributor-guide, release-notes, code-comments
-Day 5: tool-use, multi-agent-orchestration, memory-context
+Day 3-4: adrs, changelogs, contributor-guide, release-notes
+Day 5: tool-use, multi-agent-orchestration
 ```
 
 ### Quick Start Commands
 
 ```bash
-# Create Phase 5 skills
-./scripts/create-phase.sh 5
+# Create Phase 7 skills
+./scripts/create-phase.sh 7
 
 # Or implement individually
-aat create infrastructure-as-code
-aat create containers-kubernetes
-aat create observability
-aat create incident-response
+aat create unit-integration-e2e
+aat create test-strategy
+aat create contract-testing
+aat create property-based-testing
 
 # Track progress
-aat progress --phase 5
+aat progress --phase 7
 ```
 
 ---
@@ -471,6 +383,6 @@ Questions? Open an issue or discussion.
 
 ---
 
-**Last updated**: January 17, 2026  
-**Current status**: 27/55 skills complete (49%)  
-**Next milestone**: Phase 5 (DevOps & Infrastructure)
+**Last updated**: January 17, 2026
+**Current status**: 36/55 skills complete (65%)
+**Next milestone**: Phase 7 (Testing & Quality)

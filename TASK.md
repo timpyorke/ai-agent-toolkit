@@ -3,9 +3,9 @@
 ## Progress Summary
 
 - **Total Skills**: 55
-- **Completed**: 31/55 (56%)
+- **Completed**: 36/55 (65%)
 - **In Progress**: 0/55 (0%)
-- **Remaining**: 24/55 (44%)
+- **Remaining**: 19/55 (35%)
 
 ### Milestone Progress
 
@@ -25,6 +25,13 @@
   - Containers & Kubernetes: 1/1
   - Observability: 1/1
   - Incident Response: 1/1
+
+- **Phase 6 (Security & Compliance)**: 5/5 (100%) ✅ Complete
+  - Secure Coding: 1/1
+  - AuthN/AuthZ: 1/1
+  - Secrets Management: 1/1
+  - OWASP Top 10: 1/1
+  - Privacy/GDPR: 1/1
 
 ## Core Workflow
 
@@ -81,11 +88,11 @@
 
 ## Security & Compliance
 
-- [ ] secure-coding - Input validation and secure patterns
-- [ ] authn-authz - Authentication/authorization design
-- [ ] secrets-management - Vault/KMS, rotation policies
-- [ ] owasp-top-10 - Common web risks and mitigations
-- [ ] privacy-gdpr - Data handling and user rights
+- [x] secure-coding - Input validation and secure patterns
+- [x] authn-authz - Authentication/authorization design
+- [x] secrets-management - Vault/KMS, rotation policies
+- [x] owasp-top-10 - Common web risks and mitigations
+- [x] privacy-gdpr - Data handling and user rights
 
 ## Testing & Quality
 
