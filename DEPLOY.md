@@ -48,13 +48,12 @@ npm publish
 ## Install from npm (after publish)
 
 ```bash
-# Install the published package
 npm install -g ai-agent-toolkit
 
 # Verify the CLI works
 aat list
 aat info react
-aat copy
+aat copy --all --dest ~/.claude/skills/
 ```
 
 ## Troubleshooting

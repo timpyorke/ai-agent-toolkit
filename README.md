@@ -158,10 +158,7 @@ When [triggering condition], always follow these steps:
 Install the CLI tool to easily manage and deploy skills:
 
 ```bash
-# Install from npm (published package)
-npm install -g ai-agent-toolkit
-
-# Or install locally from source
+# Install globally using npm
 npm install -g .
 
 # Or use the install script
@@ -205,7 +202,3 @@ To add a new skill:
 ## License
 
 MIT License - Feel free to use and adapt these skills for your needs.
-
-## Deployment
-
-See [DEPLOY.md](DEPLOY.md) for instructions on publishing to npm and creating GitHub releases.
