@@ -36,7 +36,7 @@
         "chalk": "^4.1.2",
         "commander": "^14.0.2",
         "fs-extra": "^11.2.0",
-        "inquirer": "^13.2.0"
+        "inquirer": "^8.2.6"
     },
     "engines": {
         "node": ">=14.0.0"
