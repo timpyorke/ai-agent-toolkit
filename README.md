@@ -63,18 +63,18 @@ AI Agent Toolkit contains modular skill definitions that can be installed at use
 
 ### Security & Compliance
 
-- secure-coding - Input validation, output encoding, and secure patterns
-- authn-authz - Authentication flows and role/attribute-based access
-- secrets-management - Vault/KMS, rotation, and least privilege
-- owasp-top-10 - Common web risks and mitigations
-- privacy-gdpr - Data handling, consent, and user rights
+- [secure-coding](skills/secure-coding/SKILL.md) - Input validation, output encoding, and secure patterns
+- [authn-authz](skills/authn-authz/SKILL.md) - Authentication flows and role/attribute-based access
+- [secrets-management](skills/secrets-management/SKILL.md) - Vault/KMS, rotation, and least privilege
+- [owasp-top-10](skills/owasp-top-10/SKILL.md) - Common web risks and mitigations
+- [privacy-gdpr](skills/privacy-gdpr/SKILL.md) - Data handling, consent, and user rights
 
 ### Testing & Quality
 
-- unit-integration-e2e - Layered tests for confidence and speed
-- test-strategy - What to test, coverage goals, and flakiness control
-- contract-testing - API/schema compatibility across services
-- property-based-testing - Generative inputs for edge case discovery
+- [unit-integration-e2e](skills/unit-integration-e2e/SKILL.md) - Layered tests for confidence and speed
+- [test-strategy](skills/test-strategy/SKILL.md) - What to test, coverage goals, and flakiness control
+- [contract-testing](skills/contract-testing/SKILL.md) - API/schema compatibility across services
+- [property-based-testing](skills/property-based-testing/SKILL.md) - Generative inputs for edge case discovery
 
 ### Performance & Reliability
 
@@ -100,10 +100,12 @@ AI Agent Toolkit contains modular skill definitions that can be installed at use
 
 ## Progress Overview
 
-- **Completed**: 31/55 skills (56%)
+- **Completed**: 40/55 skills (73%)
 - **Phase 1 (Core Skills)**: 15/15 ✅ Complete
 - **Phase 2 (Architectural Foundations)**: 4/4 ✅ Complete
 - **Phase 5 (DevOps & Infrastructure)**: 4/4 ✅ Complete
+- **Phase 6 (Security & Compliance)**: 5/5 ✅ Complete
+- **Phase 7 (Testing & Quality)**: 4/4 ✅ Complete
 - **Frontend Web**: 6/6 ✅ Complete
 
 ## Installation Scopes
