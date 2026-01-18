@@ -45,5 +45,18 @@
     ],
     "AI Agent Ops": [
         "optimize-prompt"
+    ],
+    "Security & Compliance": [
+        "secure-coding",
+        "authn-authz",
+        "secrets-management",
+        "owasp-top-10",
+        "privacy-gdpr"
+    ],
+    "Testing & Quality": [
+        "unit-integration-e2e",
+        "test-strategy",
+        "contract-testing",
+        "property-based-testing"
     ]
 }
