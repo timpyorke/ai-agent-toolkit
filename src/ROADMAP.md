@@ -68,105 +68,18 @@
 - ✅ contract-testing: Provider/consumer contracts, Pact framework, OpenAPI/GraphQL schema validation, backwards compatibility, CI integration
 - ✅ property-based-testing: Generative testing with fast-check/Hypothesis, property definitions, shrinking, stateful testing, model-based testing
 
+### Phase 8: Performance & Reliability (4/4 - 100%)
+
+**Focus**: Optimize systems for speed, efficiency, and resilience
+
+- ✅ profiling: CPU profiling (flamegraphs, sampling), Memory profiling (heap analysis, leak detection), Network profiling, Database query profiling (EXPLAIN ANALYZE), Browser DevTools profiling, Production profiling (continuous profiling), Bottleneck identification
+- ✅ load-testing: Load testing with k6/Artillery/Gatling, Test scenario design (ramp-up, spike, soak), Capacity planning and forecasting, Performance regression detection, Breaking point analysis, Cost optimization via load testing, Distributed load generation
+- ✅ resiliency-patterns: Circuit breaker pattern (states, thresholds), Retry with exponential backoff and jitter, Timeout configuration (connection, read, total), Bulkhead isolation, Rate limiting (token bucket, leaky bucket, sliding window), Graceful degradation, Fallback strategies
+- ✅ chaos-engineering: Chaos Monkey and Gremlin, Failure injection types (latency, errors, resource exhaustion), Game days and chaos experiments, Blast radius limitation, Steady-state hypothesis, Automation and continuous chaos, Learning from chaos
+
 ---
 
 ## Upcoming Phases 🚀
-
-### Phase 8: Performance & Reliability (4 skills)
-
-**Priority**: Medium-High | **Estimated effort**: 2 days
-
-**Goal**: Establish comprehensive testing strategies across all layers
-
-#### Skills to implement:
-
-1. **unit-integration-e2e**
-   - Unit testing patterns (AAA, Given-When-Then)
-   - Test doubles (mocks, stubs, fakes, spies)
-   - Integration testing with test containers
-   - E2E testing with Playwright/Cypress
-   - Testing pyramid and trophy
-   - Snapshot testing
-   - Parallel test execution
-
-2. **test-strategy**
-   - What to test at each layer
-   - Coverage goals (meaningful coverage, not 100%)
-   - Flaky test prevention and detection
-   - Test data management
-   - Testing in production (feature flags, canary tests)
-   - Performance regression tests
-   - Mutation testing
-
-3. **contract-testing**
-   - Provider and consumer contracts
-   - Pact framework
-   - OpenAPI schema validation
-   - GraphQL schema testing
-   - Backwards compatibility checks
-   - Contract versioning
-   - CI integration for contract tests
-
-4. **property-based-testing**
-   - Generative testing with fast-check/Hypothesis
-   - Property definition strategies
-   - Shrinking failed inputs
-   - Stateful property testing
-   - Model-based testing
-   - Edge case discovery
-   - Integration with fuzzing
-
-**Why this phase**: Quality gates prevent bugs from reaching production and enable confident refactoring.
-
----
-
-### Phase 8: Performance & Reliability (4 skills)
-
-**Priority**: Medium | **Estimated effort**: 2 days
-
-**Goal**: Optimize systems for speed, efficiency, and resilience
-
-#### Skills to implement:
-
-1. **profiling**
-   - CPU profiling (flamegraphs, sampling)
-   - Memory profiling (heap analysis, leak detection)
-   - Network profiling
-   - Database query profiling (EXPLAIN ANALYZE)
-   - Browser DevTools profiling
-   - Production profiling (continuous profiling)
-   - Bottleneck identification
-
-2. **load-testing**
-   - Load testing with k6/Artillery/Gatling
-   - Test scenario design (ramp-up, spike, soak)
-   - Capacity planning and forecasting
-   - Performance regression detection
-   - Breaking point analysis
-   - Cost optimization via load testing
-   - Distributed load generation
-
-3. **resiliency-patterns**
-   - Circuit breaker pattern (states, thresholds)
-   - Retry with exponential backoff and jitter
-   - Timeout configuration (connection, read, total)
-   - Bulkhead isolation
-   - Rate limiting (token bucket, leaky bucket, sliding window)
-   - Graceful degradation
-   - Fallback strategies
-
-4. **chaos-engineering**
-   - Chaos Monkey and Gremlin
-   - Failure injection types (latency, errors, resource exhaustion)
-   - Game days and chaos experiments
-   - Blast radius limitation
-   - Steady-state hypothesis
-   - Automation and continuous chaos
-   - Learning from chaos
-
-**Why this phase**: Performance and reliability differentiate great products from mediocre ones.
-
----
 
 ### Phase 9: Data & ML (3 skills)
 
@@ -384,5 +297,5 @@ Questions? Open an issue or discussion.
 ---
 
 **Last updated**: January 18, 2026
-**Current status**: 40/55 skills complete (73%)
-**Next milestone**: Phase 8 (Performance & Reliability)
+**Current status**: 44/55 skills complete (80%)
+**Next milestone**: Phase 9 (Data & ML)
