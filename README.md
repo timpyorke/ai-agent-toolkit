@@ -49,9 +49,9 @@ AI Agent Toolkit contains modular skill definitions that can be installed at use
 
 ### Data & ML
 
-- data-pipelines - ETL/ELT workflows, orchestration, and data quality
-- model-serving - Deploying models to APIs, batch jobs, or streaming
-- ml-monitoring - Drift, performance, and fairness monitoring
+- [data-pipelines](skills/data-pipelines/SKILL.md) - ETL/ELT workflows, orchestration, and data quality
+- [model-serving](skills/model-serving/SKILL.md) - Deploying models to APIs, batch jobs, or streaming
+- [ml-monitoring](skills/ml-monitoring/SKILL.md) - Drift, performance, and fairness monitoring
 
 ### DevOps & SRE
 
@@ -100,13 +100,14 @@ AI Agent Toolkit contains modular skill definitions that can be installed at use
 
 ## Progress Overview
 
-- **Completed**: 44/55 skills (80%)
+- **Completed**: 47/55 skills (85%)
 - **Phase 1 (Core Skills)**: 15/15 ✅ Complete
 - **Phase 2 (Architectural Foundations)**: 4/4 ✅ Complete
 - **Phase 5 (DevOps & Infrastructure)**: 4/4 ✅ Complete
 - **Phase 6 (Security & Compliance)**: 5/5 ✅ Complete
 - **Phase 7 (Testing & Quality)**: 4/4 ✅ Complete
 - **Phase 8 (Performance & Reliability)**: 4/4 ✅ Complete
+- **Phase 9 (Data & ML)**: 3/3 ✅ Complete
 - **Frontend Web**: 6/6 ✅ Complete
 
 ## Installation Scopes

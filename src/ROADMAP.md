@@ -77,11 +77,19 @@
 - ✅ resiliency-patterns: Circuit breaker pattern (states, thresholds), Retry with exponential backoff and jitter, Timeout configuration (connection, read, total), Bulkhead isolation, Rate limiting (token bucket, leaky bucket, sliding window), Graceful degradation, Fallback strategies
 - ✅ chaos-engineering: Chaos Monkey and Gremlin, Failure injection types (latency, errors, resource exhaustion), Game days and chaos experiments, Blast radius limitation, Steady-state hypothesis, Automation and continuous chaos, Learning from chaos
 
+### Phase 9: Data & ML (3/3 - 100%)
+
+**Focus**: Enable data-driven and ML-powered features
+
+- ✅ data-pipelines: ETL vs ELT patterns, Orchestration with Airflow/Prefect/Dagster, Data quality checks and validation, Data lineage and cataloging, Incremental processing, Idempotency in data pipelines, Schema evolution
+- ✅ model-serving: Batch inference patterns, Online inference (REST/gRPC APIs), Streaming inference, Model versioning and A/B testing, Feature stores, Model registry (MLflow), Inference optimization (quantization, batching)
+- ✅ ml-monitoring: Data drift detection (statistical tests), Model performance monitoring, Concept drift and retraining triggers, Fairness and bias monitoring, Explainability and interpretability, Model observability dashboards, Alerting on degradation
+
 ---
 
 ## Upcoming Phases 🚀
 
-### Phase 9: Data & ML (3 skills)
+### Phase 10: Documentation & Developer Experience (5 skills)
 
 **Priority**: Medium | **Estimated effort**: 1-2 days
 
@@ -297,5 +305,5 @@ Questions? Open an issue or discussion.
 ---
 
 **Last updated**: January 18, 2026
-**Current status**: 44/55 skills complete (80%)
-**Next milestone**: Phase 9 (Data & ML)
+**Current status**: 47/55 skills complete (85%)
+**Next milestone**: Phase 10 (Documentation & DX)
