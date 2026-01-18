@@ -1,13 +1,21 @@
-# Unit, Integration & E2E Testing
+---
+name: unit-integration-e2e
+description: Master layered testing with unit, integration, and end-to-end tests using the testing trophy, purposeful test doubles, and automation across the stack.
+---
 
-> **Category**: Testing & Quality  
-> **Audience**: All developers, QA engineers  
-> **Prerequisites**: Basic programming knowledge, testing frameworks  
-> **Complexity**: Intermediate to Advanced
+# 🧪 Unit, Integration & E2E Testing
 
 ## Overview
 
 Comprehensive testing strategy covering three critical testing layers: unit tests for isolated components, integration tests for component interactions, and end-to-end tests for complete user workflows. Master the testing pyramid, understand test doubles, and implement effective automated testing across your entire application stack.
+
+## Core Principles
+
+1. Layer by purpose: unit for logic, integration for contracts, E2E for journeys.
+2. Favor the testing trophy: emphasize integration over excessive pure unit tests.
+3. Test behavior and contracts: avoid implementation details; use test doubles by intent.
+4. Keep tests deterministic: isolate state, mock externals, control time.
+5. Automate and observe: CI gates, artifacts, and actionable failure signals.
 
 ## Testing Pyramid vs Trophy
 
@@ -692,6 +700,49 @@ jobs:
 | Over-mocking             | False confidence | Prefer integration tests for critical paths |
 | E2E tests for everything | Maintenance hell | Follow testing pyramid/trophy               |
 
+## Anti-Patterns
+
+- Over-reliance on E2E for all cases; slow, brittle feedback
+- Testing implementation details (private state, internal arrays) instead of behavior
+- Real external calls in tests causing flakiness and nondeterminism
+- Shared state between tests; order-dependent failures
+- Snapshot tests for unstable data (timestamps, randomness)
+- Parallelizing stateful DB tests without isolation
+
+## Scenarios
+
+### New Feature Testing Plan
+
+1. Unit tests for core business logic and edge cases
+2. Integration tests for API and DB contracts (Supertest/Testcontainers)
+3. E2E tests for the critical user journey (Playwright/Cypress)
+4. Visual regression for key pages (Percy)
+5. Wire CI stages: fast unit, isolated integration, shardable E2E
+
+### Service Integration Rollout
+
+1. Contract tests with Pact between consumer and provider
+2. Integration tests hitting local containers; seed deterministic data
+3. Shadow test new service in staging; compare results vs current
+4. Canary deploy with synthetic monitoring; rollback on failures
+
+### Hardening an Unreliable Test Suite
+
+1. Replace real network/filesystem with mocks/fakes; freeze time
+2. Isolate test data via transactions or per-test schemas
+3. Quarantine flaky tests and add repeat detection in CI
+4. Reduce duplicated E2E coverage; move logic to unit/integration
+
+## Tools & Techniques
+
+- Unit: Jest/Vitest; spies/mocks/stubs/fakes by intent
+- Integration: Supertest, Testcontainers (Dockerized DB/services), MSW for HTTP
+- E2E: Playwright/Cypress; Page Object Model; sharding for speed
+- Visual: Percy/Chromatic for UI diffs
+- Contracts: Pact (consumer-driven), OpenAPI schema validation
+- Data: factories/fixtures, transactions, per-test DB setup
+- CI: split pipelines, artifacts for reports, retries with reporting
+
 ## Quick Reference
 
 ```bash
@@ -725,6 +776,10 @@ node --inspect-brk node_modules/.bin/jest --runInBand
 - [Testing Library](https://testing-library.com/)
 - [TestContainers](https://www.testcontainers.org/)
 - [Kent C. Dodds - Testing](https://kentcdodds.com/blog?q=testing)
+
+## Conclusion
+
+Layer tests by intent, emphasize integration for real value, and keep suites deterministic and fast. Combine behavior-focused tests, purposeful doubles, solid data management, and CI gates to ship confidently with reliable feedback loops.
 
 ---
 

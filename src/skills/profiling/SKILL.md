@@ -1,27 +1,21 @@
-# Profiling
+---
+name: profiling
+description: Identify performance bottlenecks with CPU, memory, network, and database profiling for data-driven optimization.
+---
 
-> **Category**: Performance & Reliability  
-> **Audience**: Backend developers, performance engineers, SREs  
-> **Prerequisites**: Understanding of system performance concepts  
-> **Complexity**: Intermediate to Advanced
+# 🔬 Profiling
 
 ## Overview
 
-Profiling identifies performance bottlenecks by measuring where your application spends time and resources. This skill covers CPU profiling (flamegraphs, sampling), memory profiling (heap analysis, leak detection), network profiling, database query profiling, browser DevTools profiling, and continuous profiling in production—enabling data-driven optimization decisions.
+Identify performance bottlenecks by measuring where your application spends time and resources. This skill covers CPU profiling (flamegraphs, sampling), memory profiling (heap analysis, leak detection), network profiling, database query profiling, browser DevTools, and continuous profiling in production.
 
-## Why Profile?
+## Core Principles
 
-**Without profiling**:
-
-- "The app is slow" → guessing at solutions
-- Premature optimization in the wrong places
-- No baseline for measuring improvements
-
-**With profiling**:
-
-- "Function X takes 80% of CPU time" → targeted fix
-- Objective data guides optimization efforts
-- Measure before/after improvements
+1. Measure first, optimize second: profile before making changes; guessing wastes time.
+2. Focus on hot paths: 80% of time is spent in 20% of code; optimize the 20%.
+3. Use production-like data: synthetic tests miss real-world bottlenecks.
+4. Profile iteratively: baseline → profile → fix → re-profile → compare.
+5. Choose the right tool: sampling for CPU, heap dumps for memory, EXPLAIN for queries.
 
 ## CPU Profiling
 
@@ -681,84 +675,68 @@ pool.on("release", () => {
 
 ## Best Practices
 
-### ✅ DO
+- Profile before optimizing; measure baseline and compare after changes
+- Focus on hot paths (top 20% of code consuming 80% of time)
+- Use production-like data volumes and workloads
+- Profile production with low-overhead tools (perf, Pyroscope, pprof)
+- Collect sufficient samples for statistical significance (100+ runs)
+- Profile optimized builds, not debug/development builds
+- Combine multiple profiling types (CPU + memory + I/O) for complete picture
 
-1. **Profile before optimizing**
+## Anti-Patterns
 
-```bash
-# Measure first
-time node app.js  # Baseline: 5.2s
+- Optimizing prematurely without profiling data
+- Micro-optimizing insignificant code paths
+- Profiling with unrealistic data (10 records vs 10K in production)
+- Profiling debug builds; missing production-only issues
+- Single-run profiling; high noise and variance
+- Ignoring I/O waits; focusing only on CPU time
+- No baseline; can't measure improvement objectively
+- Profiling only in development; production workloads differ
 
-# Optimize, then measure again
-time node app.js  # After: 1.8s (65% improvement)
-```
+## Scenarios
 
-2. **Focus on hot paths**
+### Identify Slow API Endpoint
 
-```
-80% of time is spent in 20% of code
-→ Optimize the 20%, not everything
-```
+1. Profile production with Pyroscope or pprof for 5 minutes
+2. Generate flamegraph; identify function consuming 70% CPU (e.g., JSON serialization)
+3. Hypothesis: large objects serialized inefficiently
+4. Fix: add caching or optimize serialization library
+5. Re-profile; verify CPU usage drops to 20%
 
-3. **Use production-like data**
+### Debug Memory Leak in Node.js
 
-```javascript
-// ❌ Testing with 10 records
-// ✅ Testing with 10,000 records (production scale)
-```
+1. Take heap snapshot at startup and after 30 minutes
+2. Compare snapshots in Chrome DevTools; identify growing array (event listeners)
+3. Find code not removing event listeners on component unmount
+4. Add cleanup in destructor; re-test with heap snapshots
+5. Verify memory stable after 1 hour
 
-4. **Profile in production** (with low overhead tools)
+### Optimize Slow Database Query
 
-```javascript
-// Continuous profiling captures real workload patterns
-// that synthetic tests miss
-```
+1. Enable slow query log (queries >1s) in PostgreSQL
+2. Run EXPLAIN ANALYZE on top slow query
+3. Identify sequential scan on 10M row table (no index)
+4. Add index on filter column: CREATE INDEX idx_email ON users(email)
+5. Re-run EXPLAIN ANALYZE; verify index scan and 50x speedup
 
-### ❌ DON'T
+### Reduce Browser Page Load Time
 
-1. **Don't optimize prematurely**
+1. Run Lighthouse audit; LCP score 4.2s (poor)
+2. Check Performance tab; identify 2MB image blocking render
+3. Compress image to 200KB; lazy-load below fold
+4. Re-run Lighthouse; LCP improves to 1.8s (good)
 
-```javascript
-// ❌ Micro-optimizing before profiling
-for (let i = 0, len = arr.length; i < len; i++) {} // Negligible gain
+## Tools & Techniques
 
-// ✅ Focus on algorithmic improvements
-O(n²) → O(n log n)  // Significant gain
-```
-
-2. **Don't profile debug builds**
-
-```bash
-# ❌ Profiling development build
-npm run dev
-
-# ✅ Profiling production build
-npm run build
-NODE_ENV=production node dist/app.js
-```
-
-3. **Don't ignore sample size**
-
-```bash
-# ❌ Single run (noise)
-time curl http://localhost:3000
-
-# ✅ Multiple runs (statistical significance)
-for i in {1..100}; do time curl http://localhost:3000; done
-```
-
-## Tools Comparison
-
-| Tool                | Type       | Language    | Overhead | Production-Safe |
-| ------------------- | ---------- | ----------- | -------- | --------------- |
-| **perf**            | CPU        | Any (Linux) | Low      | Yes             |
-| **pprof (Go)**      | CPU/Memory | Go          | Low      | Yes             |
-| **cProfile**        | CPU        | Python      | Medium   | Caution         |
-| **Chrome DevTools** | Browser    | JavaScript  | Medium   | Dev only        |
-| **Pyroscope**       | Continuous | Any         | Very low | Yes             |
-| **Valgrind**        | Memory     | C/C++       | High     | Dev only        |
-| **heaptrack**       | Memory     | C/C++       | Medium   | Caution         |
-| **VisualVM**        | CPU/Memory | Java        | Low      | Yes             |
+- CPU profiling: perf (Linux), pprof (Go), cProfile (Python), node --prof, Pyroscope
+- Flamegraphs: Brendan Gregg's scripts, Speedscope, Pyroscope UI
+- Memory profiling: Valgrind, heaptrack, Chrome DevTools heap snapshots, memory_profiler (Python)
+- Continuous profiling: Pyroscope, Google Cloud Profiler, Datadog Continuous Profiler
+- Network profiling: Chrome DevTools Network tab, tcpdump, Wireshark, axios interceptors
+- Database profiling: EXPLAIN ANALYZE (PostgreSQL), MySQL slow query log, pg_stat_statements, MongoDB profiler
+- Browser profiling: Chrome DevTools Performance tab, Lighthouse, React DevTools Profiler
+- Java/JVM: VisualVM, JProfiler, async-profiler, Flight Recorder
 
 ## Quick Reference
 
@@ -782,15 +760,15 @@ DevTools → Performance → Record → Stop
 
 # Lighthouse
 lighthouse https://example.com --view
+
+# Linux perf flamegraph
+perf record -F 99 -a -g -- sleep 60
+perf script | stackcollapse-perf.pl | flamegraph.pl > flame.svg
 ```
 
-## Additional Resources
+## Conclusion
 
-- [Brendan Gregg's Performance Tools](https://www.brendangregg.com/linuxperf.html)
-- [Node.js Profiling Guide](https://nodejs.org/en/docs/guides/simple-profiling/)
-- [Chrome DevTools Performance](https://developer.chrome.com/docs/devtools/performance/)
-- [Database Performance Tuning](https://use-the-index-luke.com/)
-- [Flamegraphs](https://www.brendangregg.com/flamegraphs.html)
+Profiling provides objective data to guide optimization efforts. Start with a baseline, use the right tool for the bottleneck type (CPU, memory, I/O, queries), focus on hot paths, and measure improvements. Profile production continuously to catch real-world issues.
 
 ---
 

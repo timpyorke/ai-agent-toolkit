@@ -1,13 +1,21 @@
-# Test Strategy
+---
+name: test-strategy
+description: Define a layered, resilient test strategy with meaningful coverage, flakiness prevention, robust test data management, safe testing in production, and performance regression gates.
+---
 
-> **Category**: Testing & Quality  
-> **Audience**: Tech leads, QA engineers, developers  
-> **Prerequisites**: Understanding of unit/integration/E2E testing  
-> **Complexity**: Intermediate to Advanced
+# 🧪 Test Strategy
 
 ## Overview
 
 A comprehensive test strategy defines what to test, at which layers, with what coverage goals, and how to maintain test quality over time. This skill covers meaningful coverage metrics, flaky test prevention, test data management, testing in production, and performance regression detection—enabling teams to ship confidently without over-testing or under-testing.
+
+## Core Principles
+
+1. Layer intentionally: unit for logic, integration for contracts, E2E for critical journeys.
+2. Measure meaningful coverage: prioritize critical paths; avoid chasing 100% everywhere.
+3. Remove flakiness fast: deterministic data, isolated state, mocked externals, fake timers.
+4. Manage test data well: transactions, factories/fixtures, clean setup/teardown.
+5. Test in production safely: feature flags, canary, synthetic/shadow tests, clear rollback.
 
 ## What to Test at Each Layer
 
@@ -776,6 +784,57 @@ test("applies multiple discount codes correctly", () => {
 | Benchmark performance-critical code | Prevent performance regressions     |
 | Document non-obvious test intent    | Preserve knowledge for future devs  |
 
+## Anti-Patterns
+
+- 100% coverage obsession at all layers regardless of value
+- E2E-heavy suites that duplicate unit/integration coverage and slow feedback
+- Shared mutable state between tests causing order-dependent failures
+- Real external calls in tests leading to nondeterminism and flakes
+- Time-dependent tests using real timers without control
+- Performance checks without baselines or thresholds; regressions slip through
+
+## Scenarios
+
+### New Service Test Strategy
+
+1. Define pyramid targets: unit 40–50%, integration 30–40%, E2E 10–20%
+2. Set coverage thresholds per module; higher for critical paths
+3. Establish data strategy: transactions or per-test DB, factories, fixtures
+4. Mock external dependencies; use contract tests for service integrations
+5. Wire CI: fast unit gate, integration on PR, E2E nightly or critical paths on PR
+
+### Flaky Test Remediation
+
+1. Stabilize data: fixed seeds, deterministic IDs, freeze time/fake timers
+2. Isolate state: per-test setup/teardown; no cross-test coupling
+3. Mock network/filesystem; record/replay if necessary
+4. Detect: repeat suspicious tests, add CI retries with reporting, quarantine if needed
+
+### Safe Testing in Production
+
+1. Guarded rollout with feature flags and canary deployments
+2. Synthetic monitoring of critical flows with SLO-aligned thresholds
+3. Shadow testing of new implementations and mismatch alerting
+4. Clear rollback criteria and automation
+
+### Performance Regression Gate
+
+1. Add micro-benchmarks for hot paths with time budgets
+2. Integrate k6/Gatling load tests with p95/p99 thresholds
+3. Compare current vs baseline; fail builds on >X% degradation
+4. Track perf metrics in CI artifacts and dashboards
+
+## Tools & Techniques
+
+- JavaScript: Jest/Vitest (unit), Supertest/Testcontainers (integration), Playwright/Cypress (E2E)
+- Contracts: Pact for consumer-driven contracts; OpenAPI schema validation
+- Data: Transactions, per-test DB schemas, factories/fixtures, seeds
+- Time: Fake timers (Jest/Vitest), clock mocking
+- Coverage: Istanbul/c8, per-module thresholds
+- Mutation testing: Stryker to strengthen unit tests
+- CI: flaky-test detection plugins, retries with reporting, artifacts for perf baselines
+- Monitoring: Datadog/New Relic synthetics; feature flag platforms (LaunchDarkly/Unleash)
+
 ## Quick Reference
 
 ```bash
@@ -804,6 +863,10 @@ npx jest --testNamePattern="suspicious" --repeatEach=100
 - [Kent C. Dodds - Testing Best Practices](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library)
 - [Martin Fowler - Testing Strategies](https://martinfowler.com/testing/)
 - [Flaky Tests at Google](https://testing.googleblog.com/2016/05/flaky-tests-at-google-and-how-we.html)
+
+## Conclusion
+
+An effective test strategy layers tests by purpose, emphasizes meaningful coverage on critical paths, eliminates flakiness quickly, manages test data cleanly, and validates behavior safely in production. Pair this with performance gates and clear CI policies to keep feedback fast and trustworthy as systems evolve.
 
 ---
 

@@ -1,4 +1,9 @@
-# Contract Testing
+---
+name: contract-testing
+description: Verify service compatibility with consumer-driven contracts, schema validation, and CI gates to prevent breaking changes
+---
+
+# 🤝 Contract Testing Skill
 
 > **Category**: Testing & Quality  
 > **Audience**: Backend developers, API developers, microservices teams  
@@ -8,6 +13,32 @@
 ## Overview
 
 Contract testing verifies that services can communicate correctly by testing the contracts (agreements) between them. Unlike integration tests that require running both services, contract tests validate each side independently—providers ensure they meet the contract, consumers verify they can use it. This enables independent deployments while preventing breaking changes.
+
+## Core Principles
+
+### 1. Consumer-Driven First
+
+- Let consumers define what they need; generate contracts from consumer tests
+- Publish contracts to a broker; providers verify against latest consumer expectations
+- Decouple deployments by verifying compatibility before release
+
+### 2. Match Structure, Not Exact Values
+
+- Use flexible matchers (types, shapes, regex) to avoid brittle tests
+- Validate error paths (4xx/5xx) as part of the contract
+- Keep contracts focused on interface, not implementation details
+
+### 3. Automate Compatibility in CI
+
+- Gate deployments with "can-i-deploy" checks against the broker
+- Run provider verification on every change to the API
+- Check backwards compatibility of specs (OpenAPI, GraphQL, Protobuf)
+
+### 4. Version and Evolve Safely
+
+- Use semantic versioning for contracts and endpoints
+- Prefer additive, backward-compatible changes; deprecate before removal
+- Provide migration paths and dual-support windows when necessary
 
 ## Why Contract Testing?
 
@@ -785,6 +816,24 @@ test("returns 404 when user not found", async () => {
 3. **Don't include authentication tokens in contracts** (use state handlers)
 4. **Don't make contracts too specific** (use matchers)
 
+## Anti-Patterns to Avoid
+
+### Don't:
+
+- ❌ Over-specify exact values and formats leading to brittle tests
+- ❌ Test provider internals or database state in consumer tests
+- ❌ Skip error scenarios; only test happy paths
+- ❌ Ship breaking changes without versioning or migration plan
+- ❌ Maintain contracts manually; let consumer tests generate them
+
+### Do:
+
+- ✅ Use type/shape matchers and focus on interface semantics
+- ✅ Test both success and error responses with realistic states
+- ✅ Automate broker publishing, verification, and can-i-deploy gates
+- ✅ Prefer additive changes; deprecate before removal; document migration
+- ✅ Keep contracts small, stable, and owned by consumers
+
 ## Common Pitfalls
 
 | Pitfall                        | Impact              | Solution                     |
@@ -815,6 +864,10 @@ npx pact-broker can-i-deploy \
   --version $GIT_SHA \
   --to production
 ```
+
+## Conclusion
+
+Contract testing prevents surprises by proving that services can communicate correctly before they ship. Lead with consumer-driven contracts, verify providers continuously, and gate deployments with broker checks. Favor flexible matchers and backward-compatible evolution; validate both success and error paths; and automate verification in CI. Done well, contract testing enables independent deployments with confidence across a growing ecosystem of services.
 
 ## Additional Resources
 

@@ -1,13 +1,21 @@
-# Resiliency Patterns
+---
+name: resiliency-patterns
+description: Enable fault-tolerant systems with circuit breakers, retries with backoff + jitter, timeouts, bulkheads, rate limiting, graceful degradation, and fallbacks.
+---
 
-> **Category**: Performance & Reliability  
-> **Audience**: Backend developers, SREs, architects  
-> **Prerequisites**: Understanding of distributed systems, HTTP, async programming  
-> **Complexity**: Intermediate to Advanced
+# 🛡️ Resiliency Patterns
 
 ## Overview
 
 Resiliency patterns enable systems to handle failures gracefully without cascading outages. This skill covers circuit breakers, retry with exponential backoff and jitter, timeout configuration, bulkhead isolation, rate limiting (token bucket, leaky bucket, sliding window), graceful degradation, and fallback strategies—building fault-tolerant distributed systems.
+
+## Core Principles
+
+1. Fail fast and isolate: use circuit breakers to prevent cascades.
+2. Bound retries: exponential backoff with jitter; cap attempts and total time.
+3. Time-box operations: set conservative connection/read/overall timeouts per SLA.
+4. Degrade gracefully: fallbacks, cached data, feature flags for non-critical paths.
+5. Limit blast radius: bulkheads, rate limiting, and resource isolation.
 
 ## Why Resiliency Patterns?
 
@@ -854,66 +862,60 @@ async function resilientAPICall() {
 
 ## Best Practices
 
-### ✅ DO
+- Set explicit timeouts aligned to SLAs; avoid indefinite waits
+- Use exponential backoff with jitter; cap retries and total time
+- Apply circuit breakers around unstable dependencies; monitor states
+- Isolate resources with bulkheads; separate pools for critical vs. non-critical paths
+- Enforce rate limits; use distributed limiting for multi-node deployments
+- Implement layered fallbacks; prefer cached, defaults, and alternative services
+- Instrument and observe: emit metrics, logs, and alerts for resilience events
 
-1. **Set appropriate timeouts**
+## Anti-Patterns
 
-```typescript
-// ✅ Timeout less than SLA
-const timeout = 2000; // 2s (SLA is 3s)
+- Infinite retries or retrying non-idempotent operations without safeguards
+- Global shared pools causing cross-service starvation (no bulkheads)
+- Missing or overly large timeouts leading to thread exhaustion
+- Synchronised retries without jitter (thundering herd)
+- Silent failures with no metrics on breaker open/half-open/close events
+- Single-point rate limiting on one node in a distributed system
 
-// ❌ No timeout (can wait forever)
-await fetch(url);
-```
+## Scenarios
 
-2. **Use jitter in retries**
+### External API Resilience
 
-```typescript
-// ✅ With jitter (prevents thundering herd)
-const delay = baseDelay * Math.pow(2, attempt) + Math.random() * 1000;
+1. Wrap calls with a circuit breaker and fallback to cached data
+2. Configure timeouts (connection/read/overall) conservatively
+3. Use bounded retries with exponential backoff + jitter
+4. Emit metrics on breaker events; alert on prolonged OPEN state
 
-// ❌ Without jitter (synchronized retries)
-const delay = baseDelay * Math.pow(2, attempt);
-```
+### Database Overload Protection
 
-3. **Monitor circuit breaker states**
+1. Separate critical and analytics workloads via connection pool bulkheads
+2. Apply query timeouts and lock timeouts (e.g., PostgreSQL `statement_timeout`)
+3. Rate limit high-cost endpoints; shed load under pressure
+4. Monitor queue depths and saturation; trigger autoscaling if applicable
 
-```typescript
-breaker.on("open", () => {
-  metrics.increment("circuit_breaker.open");
-  logger.warn("Circuit breaker opened for externalAPI");
-});
-```
+### Graceful Degradation for Recommendations
 
-### ❌ DON'T
+1. Primary: ML service → timeout-limited call
+2. Fallback 1: Rule-based recommendations
+3. Fallback 2: Cached/stale data
+4. Fallback 3: Static popular items + feature flags to disable optional features
 
-1. **Don't retry non-idempotent operations without safeguards**
+### Distributed Rate Limiting
 
-```typescript
-// ❌ Dangerous: POST may create duplicate resources
-await retryWithBackoff(() => axios.post("/orders", orderData));
+1. Use Redis sorted-set sliding window for multi-instance accuracy
+2. Return `429` with retry-after; log and metric increments
+3. Combine with token bucket for burst absorption; tune capacity/refill
+4. Apply per-user and per-IP keys to reduce abuse
 
-// ✅ Safe: Use idempotency key
-await retryWithBackoff(() =>
-  axios.post("/orders", orderData, {
-    headers: { "Idempotency-Key": orderId },
-  }),
-);
-```
+## Tools & Techniques
 
-2. **Don't set infinite retries**
-
-```typescript
-// ❌ Can retry forever
-while (true) {
-  retry();
-}
-
-// ✅ Limited retries
-for (let i = 0; i < maxRetries; i++) {
-  retry();
-}
-```
+- Java: Resilience4j (circuit breaker, bulkhead, rate limiter)
+- Node.js: `opossum` (CB), `axios-retry` (retry), `p-limit` (bulkhead), `express-rate-limit`
+- .NET: Polly (retry, CB, timeout)
+- Infra: Redis for distributed rate limiting; service mesh (Istio) for timeouts/retries
+- Observability: Prometheus/Grafana metrics, structured logs, alerts on breaker states
 
 ## Quick Reference
 
@@ -922,8 +924,8 @@ for (let i = 0; i < maxRetries; i++) {
 const breaker = new CircuitBreaker(fn, { timeout: 3000 });
 await breaker.fire();
 
-// Retry with backoff
-await retryWithBackoff(fn, { maxRetries: 3 });
+// Retry with backoff + jitter
+await retryWithBackoff(fn, 3, 1000, 30000);
 
 // Rate limiting
 const limiter = rateLimit({ windowMs: 60000, max: 100 });
@@ -933,18 +935,15 @@ app.use(limiter);
 const limit = pLimit(10);
 await limit(() => fn());
 
-// Timeout
+// Timeout (fetch)
 const controller = new AbortController();
 setTimeout(() => controller.abort(), 5000);
 await fetch(url, { signal: controller.signal });
 ```
 
-## Additional Resources
+## Conclusion
 
-- [Release It! by Michael Nygard](https://pragprog.com/titles/mnee2/release-it-second-edition/)
-- [Resilience4j Documentation](https://resilience4j.readme.io/)
-- [AWS Architecture Blog - Timeouts and Retries](https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/)
-- [Martin Fowler - Circuit Breaker](https://martinfowler.com/bliki/CircuitBreaker.html)
+Resilient systems fail fast, retry responsibly, time-box operations, degrade gracefully, and limit blast radius. Combine circuit breakers, backoff with jitter, timeouts, bulkheads, and rate limiting—instrumented with clear metrics—to prevent cascades and keep services dependable under failure.
 
 ---
 

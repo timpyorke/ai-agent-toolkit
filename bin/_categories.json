@@ -41,10 +41,18 @@
         "incident-response"
     ],
     "Documentation & DX": [
-        "business-context"
+        "business-context",
+        "adrs",
+        "changelogs",
+        "contributor-guide",
+        "release-notes",
+        "code-comments"
     ],
     "AI Agent Ops": [
-        "optimize-prompt"
+        "optimize-prompt",
+        "tool-use",
+        "multi-agent-orchestration",
+        "memory-context"
     ],
     "Security & Compliance": [
         "secure-coding",

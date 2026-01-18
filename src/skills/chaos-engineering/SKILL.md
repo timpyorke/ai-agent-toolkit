@@ -1,92 +1,59 @@
-# Chaos Engineering
+---
+name: chaos-engineering
+description: Proactively inject failures to discover weaknesses and build confidence in system resilience
+---
 
-> **Category**: Performance & Reliability  
-> **Audience**: SREs, platform engineers, reliability teams  
-> **Prerequisites**: Understanding of distributed systems, observability, resiliency patterns  
-> **Complexity**: Advanced
+# 🔥 Chaos Engineering Skill
 
 ## Overview
 
-Chaos engineering proactively injects failures into systems to discover weaknesses before they cause outages. This skill covers Chaos Monkey and Gremlin, failure injection types (latency, errors, resource exhaustion), game days, blast radius limitation, steady-state hypothesis, automation, and learning from chaos experiments—building confidence in system resilience.
+This skill enables AI assistants to design and execute chaos engineering experiments that proactively inject failures into systems to discover weaknesses before they cause production outages. By systematically testing how systems behave under failure conditions, teams build confidence in resilience, uncover hidden dependencies, and improve incident response capabilities.
 
-## Why Chaos Engineering?
+## Core Principles
 
-**Traditional testing**: "Does the system work when everything is perfect?"
+### 1. Define Steady State as Measurable Business Metrics
 
-**Chaos engineering**: "Does the system work when things fail?"
+- Identify key business metrics that indicate normal system health (not just technical metrics)
+- Use success rates, latencies, throughput as steady-state indicators
+- Establish concrete thresholds that define "acceptable" performance
+- Monitor these metrics continuously before, during, and after experiments
+- Example: "Order success rate > 99.5%" not "servers are running"
 
-**Real-world scenario**:
+### 2. Hypothesize and Test, Don't Guess
 
-```
-Netflix: "What if an entire AWS availability zone fails?"
-→ Chaos Monkey randomly terminates EC2 instances
-→ Discovered and fixed many failure modes
-→ Survived actual AWS outages
-```
+- Formulate explicit hypotheses: "Given X, When Y, Then Z"
+- Test assumptions about system behavior under failure
+- Either confirm resilience or discover weaknesses to fix
+- Document what you expect to happen before running experiments
+- Learn from both successes (system resilient) and failures (found gap)
 
-## Principles of Chaos Engineering
+### 3. Start Small and Minimize Blast Radius
 
-### 1. Define Steady State
+- Begin with smallest possible scope (1% traffic, staging environment)
+- Gradually increase blast radius only after validating safety
+- Always have abort conditions and rollback plans ready
+- Limit scope with selectors, percentages, and stop conditions
+- Never risk full production outage without proven safety mechanisms
 
-Measurable output that indicates normal system behavior.
+### 4. Inject Real-World Failures, Not Contrived Scenarios
 
-**Examples**:
+- Simulate actual failure modes that happen in production (AZ outage, network partition)
+- Test multiple failure types: network, compute, storage, dependency
+- Combine failures to test cascading effects
+- Avoid testing things that never actually fail in your environment
+- Learn from actual incidents to guide chaos scenarios
 
-```
-E-commerce:
-  - Steady state: Order success rate > 99.5%
-  - Steady state: p95 latency < 500ms
+### 5. Automate Chaos in CI/CD for Continuous Validation
 
-Video streaming:
-  - Steady state: Stream start success rate > 99%
-  - Steady state: Rebuffer rate < 0.5%
-```
+- Don't just run one-off experiments - make chaos continuous
+- Integrate chaos experiments into deployment pipelines
+- Run scheduled game days to maintain team readiness
+- Automate verification of steady-state conditions
+- Build chaos as a regular practice, not a special event
 
-### 2. Hypothesize About Steady State
+## Failure Injection Techniques
 
-**Hypothesis format**:
-
-```
-Given [normal conditions]
-When [failure injected]
-Then [steady state maintained]
-
-Example:
-Given normal traffic (1000 req/s)
-When one database replica fails
-Then order success rate remains > 99.5%
-```
-
-### 3. Inject Real-World Failures
-
-**Categories**:
-
-- Network: latency, packet loss, partition
-- Host: CPU spike, memory leak, disk full
-- Service: crash, slow response, errors
-- Infrastructure: AZ failure, region failure
-
-### 4. Disprove Hypothesis
-
-Run experiment and observe:
-
-- ✅ Hypothesis holds → System is resilient
-- ❌ Hypothesis disproved → Found weakness, fix it
-
-### 5. Minimize Blast Radius
-
-Start small, gradually increase scope.
-
-```
-Phase 1: 1% of traffic
-Phase 2: 10% of traffic
-Phase 3: 50% of traffic
-Phase 4: 100% of traffic
-```
-
-## Failure Injection Types
-
-### 1. Network Failures
+### Network Failures
 
 #### Latency Injection
 
@@ -326,9 +293,11 @@ docker stop postgres-db
 docker exec postgres-db pg_sleep(5)
 ```
 
-## Chaos Engineering Tools
+## Tools & Techniques
 
-### Chaos Monkey (Netflix)
+### Chaos Engineering Platforms
+
+**Chaos Monkey (Netflix)** - Original chaos engineering tool
 
 Original chaos engineering tool, terminates AWS instances randomly.
 
@@ -902,103 +871,271 @@ app.use(async (req, res, next) => {
 
 ## Best Practices
 
-### ✅ DO
+### Experiment Design
 
-1. **Start small**
+- Start with staging environments before production
+- Define clear steady-state metrics and thresholds
+- Write explicit hypothesis before running experiment
+- Document expected behavior and actual outcomes
+- Include blast radius limits and stop conditions
 
-```
-Week 1: Kill one pod in staging
-Week 2: Kill multiple pods in staging
-Week 3: Kill one pod in production (1% traffic)
-Week 4: Kill multiple pods in production (10% traffic)
-```
+### Execution Safety
 
-2. **Always have a hypothesis**
+- Notify stakeholders before production chaos experiments
+- Schedule game days during low-traffic periods when possible
+- Have rollback and abort procedures ready
+- Monitor key metrics continuously during experiments
+- Keep communication channels open during execution
+
+### Learning and Iteration
+
+- Document both successful and failed experiments
+- Conduct post-experiment reviews with full team
+- Track action items and follow up on discovered weaknesses
+- Share learnings across teams and organization
+- Gradually increase complexity of experiments over time
+
+### Automation
+
+- Integrate chaos experiments into CI/CD pipelines
+- Run experiments on schedule to catch regressions
+- Automate steady-state verification checks
+- Use progressive rollout for increasing blast radius
+- Build chaos testing as continuous practice
+
+## Anti-Patterns to Avoid
+
+### Don't:
+
+- ❌ Run surprise chaos experiments without team notification or approval
+- ❌ Skip defining hypothesis - just "see what breaks"
+- ❌ Ignore abort conditions when metrics exceed thresholds
+- ❌ Experiment in production without robust observability in place
+- ❌ Run chaos during peak traffic or critical business periods
+- ❌ Keep chaos findings siloed - not sharing learnings with team
+- ❌ Make blast radius too large in initial experiments
+
+### Do:
+
+- ✅ Schedule game days with stakeholder notification and approval
+- ✅ Write explicit hypothesis: "Given X, When Y, Then Z"
+- ✅ Always define stop conditions and respect them immediately
+- ✅ Ensure comprehensive monitoring before any chaos experiment
+- ✅ Schedule experiments during low-risk time windows
+- ✅ Share findings, conduct retrospectives, track improvements
+- ✅ Start with 1% blast radius, increase gradually after validation
+
+## Handling Different Scenarios
+
+### Scenario 1: First Chaos Experiment for a Team
+
+1. **Start in staging**: Never begin chaos journey in production
+2. **Choose simple failure**: Pod termination is good first experiment
+3. **Define hypothesis**: "System remains healthy when 1 pod killed"
+4. **Monitor closely**: Watch all key metrics during experiment
+5. **Document learnings**: Record what happened, even if successful
 
 ```yaml
-hypothesis:
-  Given: 10 replicas of myapp
-  When: Kill 2 replicas
-  Then: Traffic automatically reroutes to healthy pods
-  And: Success rate remains > 99%
+# First experiment: Kill one pod in staging
+apiVersion: chaos-mesh.org/v1alpha1
+kind: PodChaos
+metadata:
+  name: my-first-chaos
+spec:
+  action: pod-kill
+  mode: one
+  selector:
+    namespaces:
+      - staging
+    labelSelectors:
+      app: myapp
+  duration: "30s"
 ```
 
-3. **Monitor during experiments**
+### Scenario 2: Planning a Game Day
 
-```bash
-# Watch key metrics
-watch -n 5 'curl -s http://prometheus/api/v1/query?query=...'
-```
-
-4. **Learn from failures**
+1. **Define objectives**: What resilience capability are we validating?
+2. **Create runbook**: Document pre-checks, failure scenario, expected behavior
+3. **Set success criteria**: Specific metrics that define success
+4. **Notify stakeholders**: Get approval and set expectations
+5. **Execute and observe**: Run experiment, monitor metrics
+6. **Debrief thoroughly**: What went well, what broke, action items
 
 ```markdown
-## Experiment Failed ❌
+# Database Failover Game Day Runbook
 
-Success rate dropped to 95%
+## Objective
 
-Root cause: No connection pool retry logic
+Validate automatic database failover with < 60s downtime
 
-Fix: Implement retry with exponential backoff
+## Pre-Game Checklist
+
+- [ ] Alert all stakeholders
+- [ ] Verify monitoring dashboards operational
+- [ ] Confirm rollback procedure
+- [ ] Set up incident channel
+
+## Failure Scenario
+
+10:00 AM: Primary database terminated
+
+## Expected Behavior
+
+- Connection pool detects failure within 10s
+- Replica promoted to primary automatically
+- Traffic reroutes within 60s
+- Order success rate remains > 99%
+
+## Success Criteria
+
+- Failover completes in < 60s
+- Order success rate > 99%
+- No manual intervention required
+
+## Abort Conditions
+
+- Order success rate < 95%
+- Latency p95 > 2s
 ```
 
-### ❌ DON'T
+### Scenario 3: Progressive Production Rollout
 
-1. **Don't run chaos in production without approval**
+1. **Start with 1% traffic**: Smallest meaningful production test
+2. **Validate metrics**: Ensure steady state maintained
+3. **Increase gradually**: 1% → 5% → 10% → 25% → 50%
+4. **Stop if issues**: Abort at first sign of steady-state violation
+5. **Document thresholds**: At what blast radius did system struggle?
 
+```python
+# Progressive chaos rollout
+for blast_radius in [1, 5, 10, 25, 50, 100]:
+    print(f"Testing {blast_radius}% blast radius")
+
+    inject_pod_failures(percentage=blast_radius)
+    time.sleep(300)  # 5 minute experiment
+
+    success_rate = get_success_rate()
+    if success_rate < 99:
+        print(f"❌ Failed at {blast_radius}%")
+        abort_experiment()
+        break
+
+    print(f"✅ Passed at {blast_radius}%")
 ```
-❌ Surprise chaos test
-✅ Scheduled game day with stakeholders notified
-```
 
-2. **Don't ignore stop conditions**
+### Scenario 4: Discovering Hidden Dependencies
+
+1. **Hypothesis**: Service A doesn't depend on Service B
+2. **Experiment**: Inject failures into Service B
+3. **Observation**: Service A error rate increases unexpectedly
+4. **Discovery**: Found undocumented dependency through caching layer
+5. **Action**: Document dependency, add circuit breaker
 
 ```yaml
-# ✅ Always define abort conditions
-stopConditions:
-  - errorRate > 5%
-  - latencyP95 > 1000ms
-```
-
-3. **Don't experiment without observability**
-
-```
-❌ Inject failure, hope for the best
-✅ Monitor metrics, logs, traces during experiment
+# Test hypothesis about service dependencies
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: test-service-b-dependency
+spec:
+  action: partition
+  mode: all
+  selector:
+    labelSelectors:
+      app: service-b
+  direction: to
+  target:
+    selector:
+      labelSelectors:
+        app: service-a
+  duration: "5m"
 ```
 
 ## Quick Reference
 
-```bash
-# Chaos Mesh: Pod kill
-kubectl apply -f pod-chaos.yaml
+### Experiment Workflow
 
-# Chaos Mesh: Network latency
-kubectl apply -f network-chaos.yaml
-
-# AWS FIS: Terminate instances
-aws fis start-experiment --experiment-template-id <template-id>
-
-# Linux tc: Add latency
-sudo tc qdisc add dev eth0 root netem delay 300ms
-
-# stress-ng: CPU stress
-stress-ng --cpu 4 --timeout 60s
-
-# Gremlin API: CPU attack
-curl -X POST https://api.gremlin.com/v1/attacks/new \
-  -H "Authorization: Key $API_KEY" \
-  -d '{"command": {"type": "cpu", "args": ["-c", "4"]}}'
+```markdown
+1. Define steady state (success rate > 99%)
+2. Write hypothesis (Given X, When Y, Then Z)
+3. Set blast radius (start with 1%)
+4. Define stop conditions (abort if metrics drop)
+5. Execute experiment
+6. Monitor metrics continuously
+7. Document findings
+8. Fix discovered issues
 ```
 
-## Additional Resources
+### Common Failure Types
 
-- [Principles of Chaos Engineering](https://principlesofchaos.org/)
-- [Chaos Monkey by Netflix](https://netflix.github.io/chaosmonkey/)
-- [Chaos Mesh Documentation](https://chaos-mesh.org/docs/)
-- [AWS Fault Injection Simulator](https://aws.amazon.com/fis/)
-- [Gremlin Free Chaos Engineering Guide](https://www.gremlin.com/chaos-engineering/)
-- [Site Reliability Engineering Book (Google)](https://sre.google/books/)
+| Type                 | Tool       | Command                                               |
+| -------------------- | ---------- | ----------------------------------------------------- |
+| Pod kill             | Chaos Mesh | `kubectl apply -f pod-chaos.yaml`                     |
+| Network latency      | tc         | `tc qdisc add dev eth0 root netem delay 300ms`        |
+| CPU stress           | stress-ng  | `stress-ng --cpu 4 --timeout 60s`                     |
+| Instance termination | AWS FIS    | `aws fis start-experiment --experiment-template-id X` |
+| Network partition    | iptables   | `iptables -A OUTPUT -d 10.0.1.100 -j DROP`            |
+
+### Hypothesis Template
+
+```yaml
+hypothesis:
+  given: "Normal traffic at 1000 req/s with 10 replicas"
+  when: "Kill 2 random pods"
+  then: "Success rate remains > 99%"
+  and: "p95 latency stays < 500ms"
+  and: "No manual intervention required"
+```
+
+### Chaos Mesh Quick Examples
+
+```bash
+# Pod kill
+kubectl apply -f - <<EOF
+apiVersion: chaos-mesh.org/v1alpha1
+kind: PodChaos
+metadata:
+  name: pod-kill
+spec:
+  action: pod-kill
+  mode: one
+  selector:
+    labelSelectors:
+      app: myapp
+EOF
+
+# Network delay
+kubectl apply -f - <<EOF
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: network-delay
+spec:
+  action: delay
+  mode: all
+  selector:
+    labelSelectors:
+      app: myapp
+  delay:
+    latency: "300ms"
+EOF
+```
+
+### Progressive Blast Radius
+
+```
+Week 1: Staging, 1 pod
+Week 2: Staging, multiple pods
+Week 3: Production, 1% traffic
+Week 4: Production, 5% traffic
+Week 5: Production, 10% traffic
+```
+
+## Conclusion
+
+Chaos engineering transforms uncertainty into confidence by systematically testing how systems behave under failure conditions. By proactively injecting failures in controlled experiments, teams discover weaknesses before they cause production incidents, validate resilience patterns actually work, and build organizational muscle memory for incident response. The key is starting small with clear hypotheses, minimizing blast radius, monitoring continuously, and learning from every experiment. Whether using Chaos Mesh in Kubernetes, AWS FIS in cloud infrastructure, or simple tools like tc and stress-ng, the practice of chaos engineering builds resilient systems through empirical validation rather than hopeful assumptions.
+
+**Remember**: Hope is not a strategy - test your system's resilience before production tests it for you.
 
 ---
 

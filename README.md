@@ -85,22 +85,23 @@ AI Agent Toolkit contains modular skill definitions that can be installed at use
 
 ### Documentation & DX
 
-- adrs - Architecture Decision Records for transparent choices
-- changelogs - Human-friendly release summaries
-- contributor-guide - Onboarding, workflow, and conventions for contributors
-- release-notes - User-facing change communication
-- code-comments - Intent-revealing comments only where needed
+- [business-context](skills/business-context/SKILL.md) - Domain knowledge and requirements context for AI agents
+- [adrs](skills/adrs/SKILL.md) - Architecture Decision Records for transparent choices
+- [changelogs](skills/changelogs/SKILL.md) - Human-friendly release summaries with automation
+- [contributor-guide](skills/contributor-guide/SKILL.md) - Onboarding, workflow, and conventions for contributors
+- [release-notes](skills/release-notes/SKILL.md) - User-facing change communication
+- [code-comments](skills/code-comments/SKILL.md) - Intent-revealing comments only where needed
 
 ### AI Agent Ops
 
 - [optimize-prompt](skills/optimize-prompt/SKILL.md) - Clear prompts, constraints, formats, and iterative refinement
-- tool-use - Safely invoking tools, planning, and result verification
-- multi-agent-orchestration - Role design, handoffs, and coordination
-- memory-context - Managing context windows, recall, and summarization
+- [tool-use](skills/tool-use/SKILL.md) - Safely invoking tools with plans, validation, idempotency, and verification
+- [multi-agent-orchestration](skills/multi-agent-orchestration/SKILL.md) - Role design, structured messaging, handoffs, and coordination
+- [memory-context](skills/memory-context/SKILL.md) - Managing context windows, recall, summarization, and caching
 
 ## Progress Overview
 
-- **Completed**: 47/55 skills (85%)
+- **Completed**: 55/55 skills (100%) ✅
 - **Phase 1 (Core Skills)**: 15/15 ✅ Complete
 - **Phase 2 (Architectural Foundations)**: 4/4 ✅ Complete
 - **Phase 5 (DevOps & Infrastructure)**: 4/4 ✅ Complete
@@ -108,6 +109,8 @@ AI Agent Toolkit contains modular skill definitions that can be installed at use
 - **Phase 7 (Testing & Quality)**: 4/4 ✅ Complete
 - **Phase 8 (Performance & Reliability)**: 4/4 ✅ Complete
 - **Phase 9 (Data & ML)**: 3/3 ✅ Complete
+- **Phase 10 (Documentation & DX)**: 5/5 ✅ Complete
+- **Phase 11 (AI Agent Ops)**: 4/4 ✅ Complete
 - **Frontend Web**: 6/6 ✅ Complete
 
 ## Installation Scopes

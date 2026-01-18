@@ -1,28 +1,21 @@
-# Load Testing
+---
+name: load-testing
+description: Validate capacity with k6, Artillery, Gatling; test patterns, regression detection, and capacity planning.
+---
 
-> **Category**: Performance & Reliability  
-> **Audience**: Performance engineers, SREs, backend developers  
-> **Prerequisites**: Understanding of HTTP, performance metrics  
-> **Complexity**: Intermediate to Advanced
+# 🚀 Load Testing
 
 ## Overview
 
-Load testing validates that your system can handle expected and peak traffic while meeting performance requirements. This skill covers load testing with k6, Artillery, and Gatling; test scenario design (ramp-up, spike, soak); capacity planning; performance regression detection; breaking point analysis; and cost optimization through load testing.
+Load testing validates that your system handles expected and peak traffic while meeting SLAs. This skill covers test types (load, stress, spike, soak), tools (k6, Artillery, Gatling), scenario design, capacity planning, performance regression detection in CI/CD, breaking point analysis, and cost optimization.
 
-## Why Load Test?
+## Core Principles
 
-**Without load testing**:
-
-- "It works on my machine" → fails in production under load
-- No idea of system capacity
-- Discover scaling issues after launch
-
-**With load testing**:
-
-- Know exact capacity (e.g., "handles 10k req/s at p95 < 500ms")
-- Identify bottlenecks before production
-- Validate auto-scaling configuration
-- Cost optimization by right-sizing infrastructure
+1. Test production-like environments: same infrastructure, data volumes, and configurations.
+2. Ramp gradually: simulate realistic traffic patterns with think time.
+3. Define success criteria: SLAs (p95 latency, error rate) as pass/fail gates.
+4. Monitor system metrics: CPU, memory, DB connections, network during tests.
+5. Automate regression detection: baseline comparisons in CI/CD pipelines.
 
 ## Test Types
 
@@ -703,70 +696,63 @@ docker service create \
 
 ## Best Practices
 
-### ✅ DO
+- Test in production-like environments (same infra, data volume, config)
+- Ramp up gradually; include realistic think time between requests
+- Define and enforce SLA thresholds (p95 latency, error rates)
+- Monitor system metrics during tests (CPU, memory, DB connections)
+- Warm up caches and connections before measuring
+- Run regression tests in CI/CD with baseline comparisons
+- Use distributed load generation for global reach and higher RPS
 
-1. **Test in production-like environment**
+## Anti-Patterns
 
-```yaml
-# Same infrastructure, same data volume, same configuration
-staging:
-  instances: 5
-  database: production-clone
-  redis: production-config
-```
+- Testing production without permission or coordination
+- Instant spikes (0 → 1000 VUs in 1s); unrealistic and unfair
+- Ignoring p99 latency while celebrating median/p95
+- Cold-start tests with empty caches and no pre-warmed connections
+- No baseline; comparing nothing to nothing
+- Skipping system metrics; focusing only on response times
+- Over-provisioning without capacity evidence
 
-2. **Ramp up gradually**
+## Scenarios
 
-```javascript
-// ✅ Good: Gradual ramp
-{ duration: '5m', target: 1000 }
+### Validate SLA Before Launch
 
-// ❌ Bad: Instant spike (unrealistic)
-{ duration: '1s', target: 1000 }
-```
+1. Define SLA: p95 < 500ms, error rate < 1% at 1000 req/s
+2. Run k6 load test with thresholds; fail build if violated
+3. Identify bottlenecks (DB, CPU, network) and optimize
+4. Re-test until SLA met; document capacity
 
-3. **Include think time**
+### Detect Performance Regression in CI
 
-```javascript
-// Realistic user behavior
-http.get('/products');
-sleep(2);  // User reads page
-http.get('/products/123');
-sleep(5);  // User reviews product
-http.post('/cart', {...});
-```
+1. Establish baseline p95 from main branch
+2. Run load test on PR branch; compare results
+3. Fail PR if p95 increases >10%; investigate and fix
+4. Archive results as new baseline on merge
 
-4. **Monitor system metrics during tests**
+### Plan Black Friday Capacity
 
-```bash
-# CPU, memory, disk I/O, network, database connections
-kubectl top pods
-watch 'psql -c "SELECT count(*) FROM pg_stat_activity"'
-```
+1. Forecast 10x normal traffic (spike test pattern)
+2. Run stress test to find breaking point
+3. Calculate required instances with 30% headroom
+4. Validate auto-scaling triggers; adjust thresholds
+5. Run soak test (24h) to catch memory leaks
 
-### ❌ DON'T
+### Right-Size Infrastructure for Cost
 
-1. **Don't test production without permission**
+1. Load test with increasing VUs to find max capacity per instance
+2. Calculate required instances for peak + safety margin
+3. Compare cost of current vs optimized setup
+4. Implement and validate with load test
 
-```
-❌ Surprise load test on production
-✅ Scheduled test with stakeholder approval
-```
+## Tools & Techniques
 
-2. **Don't ignore outliers**
-
-```
-Median: 200ms  ← Looks good
-p95: 500ms
-p99: 5000ms    ← Real user experience!
-```
-
-3. **Don't test with empty caches**
-
-```
-❌ Cold start: No caches, no connections
-✅ Warm-up: Prime caches, establish connections
-```
+- k6: JavaScript DSL, CLI, thresholds, custom metrics, k6 Cloud
+- Artillery: YAML config, phases, think time, HTML reports
+- Gatling: Scala/Java simulations, assertions, Maven/Gradle
+- Distributed load: k6 Cloud zones, self-hosted workers (Docker Swarm)
+- CI/CD: GitHub Actions, GitLab CI, Jenkins with k6/Artillery
+- Monitoring: Prometheus, Grafana, CloudWatch during tests
 
 ## Quick Reference
 
@@ -791,13 +777,9 @@ mvn gatling:test
 jq '.metrics.http_req_duration.values' results.json
 ```
 
-## Additional Resources
+## Conclusion
 
-- [k6 Documentation](https://k6.io/docs/)
-- [Artillery Documentation](https://www.artillery.io/docs)
-- [Gatling Documentation](https://gatling.io/docs/)
-- [Performance Testing Guidance](https://martinfowler.com/articles/practical-test-pyramid.html#PerformanceTests)
-- [Google SRE Book - Load Testing](https://sre.google/workbook/non-abstract-large-system-design/)
+Load testing is essential for validating capacity, detecting regressions, and optimizing costs. Use k6/Artillery/Gatling with realistic scenarios, enforce SLA thresholds, and integrate into CI/CD to catch performance issues before production.
 
 ---
 

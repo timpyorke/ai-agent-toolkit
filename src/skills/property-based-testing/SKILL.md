@@ -1,94 +1,21 @@
-# Property-Based Testing
+---
+name: property-based-testing
+description: Generate test inputs automatically, discover edge cases, and define universal properties instead of specific examples.
+---
 
-> **Category**: Testing & Quality  
-> **Audience**: All developers, especially those working on algorithms and data structures  
-> **Prerequisites**: Understanding of unit testing, basic testing concepts  
-> **Complexity**: Intermediate to Advanced
+# 🎲 Property-Based Testing
 
 ## Overview
 
-Property-based testing generates hundreds or thousands of test inputs automatically, discovering edge cases that example-based tests miss. Instead of writing specific examples (e.g., "sort([3,1,2]) === [1,2,3]"), you define properties that should always hold true (e.g., "sorted output length equals input length"). The framework generates random inputs, finds failures, and automatically "shrinks" them to minimal failing cases.
+Property-based testing generates hundreds or thousands of test inputs automatically, discovering edge cases that example-based tests miss. Define properties that should always hold (e.g., "sorted output length equals input length") rather than specific examples. Frameworks like Fast-Check and Hypothesis generate random inputs, find failures, and automatically shrink them to minimal failing cases.
 
-## Why Property-Based Testing?
+## Core Principles
 
-### Example-Based Testing Limitations
-
-```typescript
-// Example-based test
-test("reverse function works", () => {
-  expect(reverse([1, 2, 3])).toEqual([3, 2, 1]);
-  expect(reverse([])).toEqual([]);
-  expect(reverse([1])).toEqual([1]);
-});
-
-// What about these edge cases?
-// - Very large arrays
-// - Arrays with duplicates
-// - Arrays with special values (undefined, null, NaN)
-// - Nested arrays
-```
-
-### Property-Based Approach
-
-```typescript
-import { fc } from "fast-check";
-
-test("reverse twice returns original", () => {
-  fc.assert(
-    fc.property(fc.array(fc.anything()), (arr) => {
-      expect(reverse(reverse(arr))).toEqual(arr);
-    }),
-  );
-});
-
-// Automatically tests:
-// - Empty arrays
-// - Single elements
-// - Large arrays
-// - Arrays with duplicates, undefined, null, objects, etc.
-// - Thousands of random combinations
-```
-
-## Core Concepts
-
-### Properties vs Examples
-
-**Example-based**: Specific inputs and outputs
-
-```typescript
-test("addition", () => {
-  expect(add(2, 3)).toBe(5);
-  expect(add(0, 0)).toBe(0);
-  expect(add(-1, 1)).toBe(0);
-});
-```
-
-**Property-based**: Universal truths
-
-```typescript
-test("addition properties", () => {
-  // Commutative: a + b === b + a
-  fc.assert(
-    fc.property(fc.integer(), fc.integer(), (a, b) => {
-      expect(add(a, b)).toBe(add(b, a));
-    }),
-  );
-
-  // Identity: a + 0 === a
-  fc.assert(
-    fc.property(fc.integer(), (a) => {
-      expect(add(a, 0)).toBe(a);
-    }),
-  );
-
-  // Associative: (a + b) + c === a + (b + c)
-  fc.assert(
-    fc.property(fc.integer(), fc.integer(), fc.integer(), (a, b, c) => {
-      expect(add(add(a, b), c)).toBe(add(a, add(b, c)));
-    }),
-  );
-});
-```
+1. Define properties, not examples: universal truths that hold for all valid inputs.
+2. Leverage generators: use built-in arbitraries for primitives, composite types, and domain-specific data.
+3. Test inverse operations, idempotence, invariants, commutativity, and oracles.
+4. Trust shrinking: frameworks reduce failing cases to minimal reproducible examples.
+5. Combine with example-based tests: properties for general behavior, examples for specific edge cases.
 
 ## Fast-Check (JavaScript/TypeScript)
 
@@ -699,96 +626,74 @@ fc.assert(
 
 ## Best Practices
 
-### ✅ DO
+- Start with simple properties (length preservation, invariants)
+- Use property-based tests for algorithms, data structures, and parsers
+- Combine with example-based tests for specific edge cases and regressions
+- Configure numRuns based on criticality (100 default, 1000+ for critical code)
+- Analyze shrunk failures to understand root causes, not just symptoms
+- Use custom generators for domain-specific types (users, transactions, configs)
+- Test properties like inverse operations, idempotence, commutativity, oracles
 
-1. **Start with simple properties**
+## Anti-Patterns
 
-```typescript
-// ✅ Good: Simple, clear property
-test("array length unchanged by map", () => {
-  fc.assert(
-    fc.property(fc.array(fc.integer()), (arr) => {
-      expect(arr.map((x) => x * 2).length).toBe(arr.length);
-    }),
-  );
-});
-```
+- Testing trivial properties ("function returns something")
+- Ignoring shrinking output; fixing only the minimal case without understanding root cause
+- Running too many iterations for simple functions (slow CI)
+- Overly complex properties that are hard to debug
+- Testing implementation details instead of observable properties
+- No example-based tests; properties alone miss specific documented behaviors
+- Using property-based tests for UI interactions (better suited for unit/integration)
 
-2. **Use property-based tests for algorithms**
+## Scenarios
 
-```typescript
-// ✅ Good use case: Sorting algorithm
-test("custom sort is correct", () => {
-  fc.assert(
-    fc.property(fc.array(fc.integer()), (arr) => {
-      const sorted = customSort([...arr]);
-      // Properties: sorted, same elements, same length
-      expect(isSorted(sorted)).toBe(true);
-      expect(sorted.length).toBe(arr.length);
-      expect(new Set(sorted)).toEqual(new Set(arr));
-    }),
-  );
-});
-```
+### Test Sorting Algorithm
 
-3. **Combine with example-based tests**
+1. Define properties: output is sorted, same elements, same length
+2. Use fc.array(fc.integer()) generator
+3. Run 1000 iterations; verify sorted order with pairwise comparison
+4. Compare with built-in sort as oracle
+5. On failure, analyze shrunk input (e.g., [0, -1])
 
-```typescript
-// Example-based for specific cases
-test("handles empty array", () => {
-  expect(myFunction([])).toEqual([]);
-});
+### Validate JSON Parser
 
-// Property-based for general behavior
-test("preserves length", () => {
-  fc.assert(
-    fc.property(fc.array(fc.anything()), (arr) => {
-      expect(myFunction(arr).length).toBe(arr.length);
-    }),
-  );
-});
-```
+1. Generate random JSON with fc.json() or custom generators
+2. Property: parse(stringify(obj)) === obj (round-trip)
+3. Run 500 iterations; check no data loss
+4. On failure, shrink to minimal failing JSON structure
+5. Fix parser edge case (e.g., nested null handling)
 
-### ❌ DON'T
+### Test State Machine (Shopping Cart)
 
-1. **Don't test trivial properties**
+1. Define commands: add_item, remove_item, clear_cart
+2. Use stateful testing with model (array) and real implementation
+3. Generate random command sequences (100 commands)
+4. Check invariant: model.size() === real.size() after each command
+5. Shrink failing sequence to minimal (e.g., add → remove → add)
 
-```typescript
-// ❌ Bad: Too simple
-test("function returns something", () => {
-  fc.assert(
-    fc.property(fc.integer(), (x) => {
-      expect(myFunction(x)).toBeDefined();
-    }),
-  );
-});
-```
+### Discover Edge Cases in Encoding
 
-2. **Don't ignore shrinking output**
+1. Property: decode(encode(text)) === text
+2. Use fc.string() or fc.unicode() for wide character coverage
+3. Run 200 iterations; find edge case (e.g., emoji, null bytes)
+4. Analyze shrunk input (empty string or single problematic char)
+5. Fix encoding bug and re-run
 
-```typescript
-// When test fails:
-// Property failed after 1 test
-// Shrunk to: [0]
-//
-// ❌ Don't just fix this specific case
-// ✅ Understand why [0] fails and fix root cause
-```
+## Tools & Techniques
 
-## Common Pitfalls
-
-| Pitfall                   | Impact             | Solution                           |
-| ------------------------- | ------------------ | ---------------------------------- |
-| Testing implementation    | Brittle tests      | Test properties, not steps         |
-| Ignoring shrunk failures  | Missing root cause | Analyze minimal failing case       |
-| Too many runs             | Slow test suite    | Start with 100, increase if needed |
-| Overly complex properties | Hard to debug      | Break into smaller properties      |
+- JavaScript/TypeScript: Fast-Check, JSVerify
+- Python: Hypothesis, QuickCheck-inspired libraries
+- Generators: fc.integer(), fc.array(), fc.record(), fc.oneof(), custom arbitraries
+- Shrinking: automatic reduction to minimal failing case
+- Stateful testing: fc.commands() (Fast-Check), RuleBasedStateMachine (Hypothesis)
+- Integration: Jest, Mocha, PyTest, AVA
+- Configuration: numRuns, timeout, seed for reproducibility
 
 ## Quick Reference
 
-**Fast-Check**
-
 ```typescript
+// Fast-Check (JavaScript/TypeScript)
+import { fc } from 'fast-check';
+
 fc.assert(
   fc.property(
     fc.integer(),        // Generator
@@ -798,23 +703,31 @@ fc.assert(
   ),
   { numRuns: 100 }       // Options
 );
+
+// Common generators
+fc.integer({ min: 0, max: 100 })
+fc.array(fc.string())
+fc.record({ name: fc.string(), age: fc.nat() })
+fc.oneof(fc.string(), fc.constant(null))
 ```
 
-**Hypothesis**
-
 ```python
+# Hypothesis (Python)
+from hypothesis import given, strategies as st
+
 @given(st.integers())    # Strategy (generator)
 def test_property(x):
     assert ...           # Property assertion
+
+# Common strategies
+st.integers(min_value=0, max_value=100)
+st.lists(st.text())
+st.builds(User, name=st.text(), age=st.integers())
 ```
 
-## Additional Resources
+## Conclusion
 
-- [Fast-Check Documentation](https://fast-check.dev/)
-- [Hypothesis Documentation](https://hypothesis.readthedocs.io/)
-- [Property-Based Testing Patterns](https://fsharpforfunandprofit.com/posts/property-based-testing-2/)
-- [John Hughes - Testing the Hard Stuff](https://www.youtube.com/watch?v=zi0rHwfiX1Q)
-- [QuickCheck (Original Haskell library)](https://hackage.haskell.org/package/QuickCheck)
+Property-based testing complements example-based tests by discovering edge cases automatically. Define universal properties (inverse operations, invariants, commutativity), leverage powerful generators, and trust shrinking to pinpoint minimal failures. Use for algorithms, parsers, and data structures where exhaustive example coverage is impractical.
 
 ---
 

@@ -1,33 +1,21 @@
-# ML Monitoring
+---
+name: ml-monitoring
+description: Detect drift, track performance, ensure fairness, and automate retraining for reliable ML in production.
+---
 
-> **Category**: Data & ML  
-> **Audience**: ML engineers, data scientists, SREs  
-> **Prerequisites**: Understanding of ML models, statistics, observability  
-> **Complexity**: Advanced
+# 🔍 ML Monitoring
 
 ## Overview
 
-ML monitoring ensures models continue performing well in production by detecting data drift, concept drift, performance degradation, and fairness issues. This skill covers drift detection (statistical tests), model performance monitoring, retraining triggers, bias/fairness monitoring, explainability, observability dashboards, and alerting—enabling reliable ML systems.
+Ensure ML models remain accurate, fair, and explainable in production. This skill covers data drift detection (KS test, PSI, Evidently), concept drift, model performance tracking (accuracy, latency, Prometheus), fairness monitoring (demographic parity, equal opportunity), explainability (SHAP, LIME), dashboards, alerting, and automated retraining triggers.
 
-## Why ML Monitoring?
+## Core Principles
 
-**Without monitoring**: Silent model failures, degraded accuracy, biased predictions, no visibility into why predictions changed.
-
-**With monitoring**: Early detection of issues, automated retraining, fairness guarantees, explainable predictions.
-
-**Real-world scenario**:
-
-```
-Credit scoring model deployed in January 2024:
-  - Training accuracy: 92%
-  - Production accuracy (March 2024): 78% ⚠️
-
-Cause: Economic changes shifted data distribution
-Solution: Data drift detection → Automated retraining
-
-Without monitoring: Customers get incorrect scores for months
-With monitoring: Alert fires, model retrains, accuracy restored
-```
+1. Log all predictions: features, outputs, ground truth, timestamps, and model versions.
+2. Monitor drift continuously: statistical tests (KS, Chi-square, PSI) to detect feature and target shifts.
+3. Track performance metrics: accuracy, precision, recall, F1, latency over rolling windows.
+4. Enforce fairness: measure and alert on demographic parity and equal opportunity violations.
+5. Automate retraining: trigger pipelines when drift or degradation exceeds thresholds.
 
 ## Data Drift Detection
 
@@ -872,75 +860,123 @@ if result['status'] == 'triggered':
 
 ## Best Practices
 
-### ✅ DO
+- Log all predictions with features, outputs, ground truth, timestamps, and model versions
+- Monitor multiple dimensions: accuracy, drift (PSI), fairness, latency
+- Automate retraining when drift or performance degradation detected
+- Provide explanations (SHAP/LIME) for high-stakes predictions
+- Set alerts with runbooks for drift, accuracy drops, and fairness violations
+- Use rolling windows (7-day, 30-day) to track metric trends
+- Warm-start monitoring: establish baselines from training/validation data
 
-1. **Log all predictions**
+## Anti-Patterns
 
-```python
-# ✅ Store predictions for later analysis
-log_prediction(features, prediction, model_version, timestamp)
-```
+- Deploying models without prediction logging or performance tracking
+- Ignoring fairness metrics; biased models deployed to production
+- Waiting for users to report issues instead of proactive alerting
+- No automated retraining; models degrade silently over months
+- Monitoring only accuracy; missing drift, latency, or fairness issues
+- Hard-coded thresholds without statistical rigor (e.g., arbitrary drift limits)
+- No explainability for high-risk predictions (credit, hiring, healthcare)
 
-2. **Monitor multiple metrics**
+## Scenarios
 
-```python
-# ✅ Track accuracy, fairness, drift, latency
-metrics = {
-    'accuracy': calculate_accuracy(),
-    'drift_score': calculate_psi(),
-    'fairness': check_demographic_parity(),
-    'latency_p95': get_latency_p95()
-}
-```
+### Detect Data Drift and Retrain
 
-3. **Automate retraining**
+1. Run weekly batch job to compare recent production features vs training baseline using PSI
+2. If PSI > 0.2 on critical features, trigger alert and retraining pipeline
+3. Retrain on last 90 days of labeled data; validate on holdout set
+4. Deploy new model version; update baseline and monitor for improvement
 
-```python
-# ✅ Retrain on drift/degradation
-if drift_detected() or accuracy_dropped():
-    trigger_retraining_pipeline()
-```
+### Monitor Fairness in Credit Scoring
 
-4. **Explain predictions**
+1. Log predictions with sensitive attributes (gender, race) and outcomes
+2. Calculate demographic parity and equal opportunity weekly
+3. Alert if disparity > 10%; investigate feature contributions with SHAP
+4. Adjust model or features; re-validate fairness before deployment
 
-```python
-# ✅ Provide explanations for critical predictions
-if prediction_probability > 0.9:
-    explanation = explain_with_shap(model, features)
-    log_explanation(prediction_id, explanation)
-```
+### Performance Degradation Alert
 
-### ❌ DON'T
+1. Track rolling 7-day accuracy with Prometheus gauge
+2. Alert if accuracy drops below 85% for >1 hour
+3. Check for concept drift (feature distributions unchanged, target relationship shifted)
+4. Trigger retraining with recent labeled data; A/B test new model vs old
 
-1. **Don't deploy without monitoring**
+### Explainability for High-Stakes Predictions
 
-```python
-# ❌ No visibility
-deploy_model()  # And forget about it
+1. For loan denials (prediction < 0.3), generate SHAP explanation
+2. Log top 5 contributing features and their impacts
+3. Surface explanations in customer-facing UI or audit logs
+4. Review patterns monthly to ensure model reasoning aligns with policy
 
-# ✅ Monitor continuously
-deploy_model_with_monitoring()
-```
+## Tools & Techniques
 
-2. **Don't ignore fairness**
+- Drift detection: Evidently AI, Kolmogorov-Smirnov, Chi-square, PSI, Alibi Detect
+- Performance tracking: Prometheus, Grafana, custom metrics (accuracy, precision, recall, F1)
+- Fairness: Fairlearn, Aequitas, custom demographic parity/equal opportunity checks
+- Explainability: SHAP, LIME, Integrated Gradients, Captum
+- Orchestration: Airflow, Kubeflow, MLflow for retraining pipelines
+- Logging: Data lakes (S3/BigQuery), time-series DBs (InfluxDB), feature stores (Feast)
+- Alerting: Prometheus Alertmanager, PagerDuty, Slack integrations
 
-```python
-# ❌ No fairness checks
-# Model might be biased
+## Best Practices
 
-# ✅ Monitor fairness metrics
-monitor_fairness_metrics(sensitive_attributes)
-```
+- Log all predictions with features, outputs, ground truth, timestamps, and model versions
+- Monitor multiple dimensions: accuracy, drift (PSI), fairness, latency
+- Automate retraining when drift or performance degradation detected
+- Provide explanations (SHAP/LIME) for high-stakes predictions
+- Set alerts with runbooks for drift, accuracy drops, and fairness violations
+- Use rolling windows (7-day, 30-day) to track metric trends
+- Warm-start monitoring: establish baselines from training/validation data
 
-3. **Don't wait for users to report issues**
+## Anti-Patterns
 
-```python
-# ❌ Reactive
-# User: "Your model is broken!"
+- Deploying models without prediction logging or performance tracking
+- Ignoring fairness metrics; biased models deployed to production
+- Waiting for users to report issues instead of proactive alerting
+- No automated retraining; models degrade silently over months
+- Monitoring only accuracy; missing drift, latency, or fairness issues
+- Hard-coded thresholds without statistical rigor (e.g., arbitrary drift limits)
+- No explainability for high-risk predictions (credit, hiring, healthcare)
 
-# ✅ Proactive
-# Alert: "Accuracy dropped 10%, retraining triggered"
-```
+## Scenarios
+
+### Detect Data Drift and Retrain
+
+1. Run weekly batch job to compare recent production features vs training baseline using PSI
+2. If PSI > 0.2 on critical features, trigger alert and retraining pipeline
+3. Retrain on last 90 days of labeled data; validate on holdout set
+4. Deploy new model version; update baseline and monitor for improvement
+
+### Monitor Fairness in Credit Scoring
+
+1. Log predictions with sensitive attributes (gender, race) and outcomes
+2. Calculate demographic parity and equal opportunity weekly
+3. Alert if disparity > 10%; investigate feature contributions with SHAP
+4. Adjust model or features; re-validate fairness before deployment
+
+### Performance Degradation Alert
+
+1. Track rolling 7-day accuracy with Prometheus gauge
+2. Alert if accuracy drops below 85% for >1 hour
+3. Check for concept drift (feature distributions unchanged, target relationship shifted)
+4. Trigger retraining with recent labeled data; A/B test new model vs old
+
+### Explainability for High-Stakes Predictions
+
+1. For loan denials (prediction < 0.3), generate SHAP explanation
+2. Log top 5 contributing features and their impacts
+3. Surface explanations in customer-facing UI or audit logs
+4. Review patterns monthly to ensure model reasoning aligns with policy
+
+## Tools & Techniques
+
+- Drift detection: Evidently AI, Kolmogorov-Smirnov, Chi-square, PSI, Alibi Detect
+- Performance tracking: Prometheus, Grafana, custom metrics (accuracy, precision, recall, F1)
+- Fairness: Fairlearn, Aequitas, custom demographic parity/equal opportunity checks
+- Explainability: SHAP, LIME, Integrated Gradients, Captum
+- Orchestration: Airflow, Kubeflow, MLflow for retraining pipelines
+- Logging: Data lakes (S3/BigQuery), time-series DBs (InfluxDB), feature stores (Feast)
+- Alerting: Prometheus Alertmanager, PagerDuty, Slack integrations
 
 ## Quick Reference
 
@@ -973,14 +1009,9 @@ model_accuracy = Gauge('ml_model_accuracy', 'Model accuracy')
 model_accuracy.set(0.92)
 ```
 
-## Additional Resources
+## Conclusion
 
-- [Evidently AI Documentation](https://docs.evidentlyai.com/)
-- [SHAP Documentation](https://shap.readthedocs.io/)
-- [Fairlearn Documentation](https://fairlearn.org/)
-- [Alibi Detect (Drift Detection)](https://docs.seldon.io/projects/alibi-detect/)
-- [Monitoring Machine Learning Models in Production](https://christophergs.com/machine%20learning/2020/03/14/how-to-monitor-machine-learning-models/)
-- [Google ML Ops Best Practices](https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning)
+ML monitoring is essential for production reliability: detect drift early, track performance continuously, enforce fairness, and automate retraining to keep models accurate and trustworthy.
 
 ---
 

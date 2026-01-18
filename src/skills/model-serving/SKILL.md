@@ -1,35 +1,21 @@
-# Model Serving
+---
+name: model-serving
+description: Deploy ML models to production with batch/online/streaming inference, versioning, A/B testing, and optimization.
+---
 
-> **Category**: Data & ML  
-> **Audience**: ML engineers, data scientists, backend engineers  
-> **Prerequisites**: Understanding of ML models, REST APIs, containerization  
-> **Complexity**: Advanced
+# 🚀 Model Serving
 
 ## Overview
 
-Model serving deploys trained ML models to production where they can make predictions on real data. This skill covers batch inference, online inference (REST/gRPC), streaming inference, model versioning, A/B testing, feature stores, model registries (MLflow), and inference optimization (quantization, batching)—enabling scalable, reliable ML in production.
+Deploy trained ML models to production for scalable, reliable predictions. This skill covers inference patterns (batch, online, streaming), model versioning (MLflow), A/B testing, feature stores (Feast), optimization (quantization, batching, caching), and deployment strategies (Kubernetes, canary rollouts).
 
-## Why Model Serving?
+## Core Principles
 
-**Without proper serving**: Jupyter notebook models that never reach production, slow inference, hard to update, no monitoring.
-
-**With proper serving**: Fast, scalable predictions, version control, gradual rollouts, performance tracking.
-
-**Real-world scenario**:
-
-```
-Recommendation system needs:
-  - Real-time predictions (< 100ms)
-  - Handle 10,000 req/s
-  - A/B test new models
-  - Rollback if accuracy drops
-
-Solution:
-  - Online serving with FastAPI + TorchServe
-  - Feature store for low-latency feature lookup
-  - MLflow for model versioning
-  - Gradual traffic shifting with A/B testing
-```
+1. Version everything: models, features, and APIs for reproducibility and rollback.
+2. Choose the right pattern: batch for bulk offline, online for low-latency, streaming for real-time events.
+3. Optimize for latency and throughput: quantization, batching, caching, and efficient serving frameworks.
+4. Test before full rollout: A/B testing, canary deployments, and gradual traffic shifting.
+5. Monitor in production: track latency, accuracy, drift, and resource usage continuously.
 
 ## Inference Patterns
 
@@ -940,69 +926,71 @@ spec:
 
 ## Best Practices
 
-### ✅ DO
+- Version models explicitly with semantic versioning or MLflow registry
+- Implement health checks (readiness, liveness) for serving endpoints
+- Log all predictions with inputs, outputs, latency, and model version
+- Use feature stores for consistent training/serving features
+- Validate inputs before inference to prevent crashes
+- Monitor model staleness and trigger retraining on drift or degradation
+- Optimize for production: quantization, batching, caching, GPU utilization
+- Test with canary deployments before full rollout
 
-1. **Version models explicitly**
+## Anti-Patterns
 
-```python
-# ✅ Clear versioning
-model = mlflow.pyfunc.load_model("models:/fraud-detector/v2.1.0")
-```
+- Deploying models without versioning or registry tracking
+- No input validation; crashes on unexpected data
+- Ignoring model staleness; never retraining or updating
+- Synchronous single-request inference without batching (inefficient)
+- No health checks or monitoring; silent failures
+- Training/serving feature skew; different preprocessing pipelines
+- Hard-coded model paths; no graceful rollback mechanism
+- No A/B testing; risky full rollouts of untested models
 
-2. **Implement health checks**
+## Scenarios
 
-```python
-# ✅ Readiness and liveness
-@app.get("/health")
-def health():
-    return {"status": "healthy", "model_version": "v2.1.0"}
-```
+### Deploy Fraud Detection Model Online
 
-3. **Monitor predictions**
+1. Train and register model in MLflow with version v2.1.0
+2. Build FastAPI endpoint with input validation (Pydantic schemas)
+3. Load model from MLflow registry at startup
+4. Deploy to Kubernetes with 3 replicas and HPA (CPU-based scaling)
+5. Expose /predict and /health endpoints; monitor latency with Prometheus
 
-```python
-# ✅ Log predictions for analysis
-log_prediction(input, output, latency, model_version)
-```
+### Batch Inference for Daily Recommendations
 
-4. **Use feature stores**
+1. Schedule daily Spark job to load user features from data lake
+2. Load production model from MLflow registry
+3. Apply pandas UDF for distributed inference across partitions
+4. Write predictions to S3 or database; partition by date
+5. Monitor job duration, row counts, and data quality
 
-```python
-# ✅ Consistent features
-features = feature_store.get_online_features(entity_id)
-prediction = model.predict(features)
-```
+### A/B Test New Model Version
 
-### ❌ DON'T
+1. Deploy v2.0.0 to canary subset (10% traffic via Istio VirtualService)
+2. Route traffic by user_id hash for consistent assignment
+3. Log predictions with model variant for both versions
+4. Compare accuracy, latency, and business metrics after 3 days
+5. Gradually increase to 50%, then 100% if metrics improve; rollback if degraded
 
-1. **Don't deploy without versioning**
+### Optimize Model for Low Latency
 
-```python
-# ❌ No version tracking
-model = load_model("model.pkl")
-```
+1. Profile baseline: p95 latency 200ms, throughput 100 req/s
+2. Apply PyTorch quantization (int8); reduce model size by 4x
+3. Enable dynamic batching (batch_size=32, max_delay=50ms)
+4. Add LRU cache for repeated inputs (10K entries)
+5. Deploy to GPU instances; achieve p95 50ms, throughput 500 req/s
 
-2. **Don't skip input validation**
+## Tools & Techniques
 
-```python
-# ❌ No validation
-prediction = model.predict(user_input)  # Could crash
-
-# ✅ Validate input
-if not validate_input(user_input):
-    raise HTTPException(400, "Invalid input")
-```
-
-3. **Don't ignore model staleness**
-
-```python
-# ❌ Model never updated
-# Deploy once, forget
-
-# ✅ Monitor and retrain
-if drift_detected() or accuracy_dropped():
-    trigger_retraining()
-```
+- Model registries: MLflow, Weights & Biases, Neptune
+- Serving frameworks: TorchServe, TensorFlow Serving, TensorRT, ONNX Runtime
+- Online serving: FastAPI, Flask, gRPC, Ray Serve, Seldon Core, KServe
+- Batch inference: Spark (pandas UDF), Dask, Ray Data
+- Streaming: Kafka + model consumers, Flink, Kinesis
+- Feature stores: Feast, Tecton, Hopsworks
+- Optimization: quantization (PyTorch, TFLite), ONNX, TensorRT, batching
+- Deployment: Kubernetes, Istio (traffic splitting), Docker, AWS SageMaker, Azure ML
+- Monitoring: Prometheus, Grafana, MLflow tracking, custom metrics
 
 ## Quick Reference
 
@@ -1032,15 +1020,9 @@ model_quantized = torch.quantization.quantize_dynamic(
 )
 ```
 
-## Additional Resources
+## Conclusion
 
-- [MLflow Model Registry](https://mlflow.org/docs/latest/model-registry.html)
-- [TorchServe Documentation](https://pytorch.org/serve/)
-- [TensorFlow Serving](https://www.tensorflow.org/tfx/guide/serving)
-- [Feast Feature Store](https://docs.feast.dev/)
-- [Seldon Core](https://docs.seldon.io/projects/seldon-core/)
-- [KServe (KFServing)](https://kserve.github.io/website/)
-- [Ray Serve](https://docs.ray.io/en/latest/serve/index.html)
+Effective model serving bridges training and production with versioning, appropriate inference patterns, optimization, and continuous monitoring. Choose batch for scale, online for latency, and streaming for real-time. Always test before full rollout.
 
 ---
 
