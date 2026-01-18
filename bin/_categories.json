@@ -1,0 +1,49 @@
+{
+    "Core Workflow": [
+        "ai-pair-programming",
+        "commit-message",
+        "git-workflow",
+        "code-review",
+        "debugging"
+    ],
+    "Architecture & Design": [
+        "system-design",
+        "domain-modeling",
+        "event-driven-architecture",
+        "api-versioning"
+    ],
+    "Backend & Services": [
+        "api-design",
+        "api-mocking",
+        "database-design",
+        "database-management",
+        "caching",
+        "messaging"
+    ],
+    "Frontend Web": [
+        "react",
+        "vue",
+        "angular",
+        "accessibility",
+        "performance",
+        "state-management"
+    ],
+    "Mobile": [
+        "android-development",
+        "ios-development",
+        "flutter-development"
+    ],
+    "DevOps & SRE": [
+        "ci-cd-pipeline",
+        "infrastructure-as-code",
+        "containers-kubernetes",
+        "observability",
+        "incident-response"
+    ],
+    "Documentation & DX": [
+        "business-context"
+    ],
+    "AI Agent Ops": [
+        "optimize-prompt"
+    ]
+}

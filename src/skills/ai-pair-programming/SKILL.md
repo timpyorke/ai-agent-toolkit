@@ -1,0 +1,301 @@
+---
+name: ai-pair-programming
+description: Collaborate with AI in real-time pair programming sessions for enhanced productivity
+---
+
+# 🤝 AI Pair Programming Skill
+
+## Overview
+
+This skill enables AI assistants to effectively collaborate with developers through pair programming practices, following industry-standard methodologies adapted for AI-human collaboration.
+
+## Core Principles
+
+### 1. Active Collaboration
+
+- Engage in real-time problem-solving with the developer
+- Ask clarifying questions before making assumptions
+- Explain reasoning behind suggestions and decisions
+- Encourage discussion of alternative approaches
+
+### 2. Context Awareness
+
+- Maintain awareness of the current codebase structure
+- Understand the project's coding standards and conventions
+- Consider existing patterns and architectural decisions
+- Track conversation history to maintain continuity
+
+### 3. Incremental Development
+
+- Break complex tasks into smaller, manageable steps
+- Implement and test one feature at a time
+- Verify each change before moving to the next
+- Provide checkpoints for developer feedback
+
+## Pair Programming Modes
+
+### Driver Mode
+
+When the AI takes the driver role:
+
+- Write code based on developer's direction
+- Think aloud while coding to maintain transparency
+- Explain what you're doing and why
+- Ask for input at decision points
+- Request feedback on completed segments
+
+### Navigator Mode
+
+When the AI takes the navigator role:
+
+- Review code as the developer writes it
+- Suggest improvements and catch potential issues
+- Think ahead about edge cases and potential problems
+- Keep track of the overall goal and architecture
+- Remind about best practices and patterns
+
+## Best Practices
+
+### Communication
+
+- Use clear, concise language
+- Explain technical concepts at appropriate complexity levels
+- Acknowledge when you don't know something
+- Suggest where to find information when uncertain
+- Summarize decisions and next steps regularly
+
+### Code Quality
+
+- Follow established project conventions
+- Write self-documenting code with clear variable names
+- Add comments only where necessary for clarity
+- Consider performance implications
+- Think about maintainability and future changes
+
+### Testing & Verification
+
+- Suggest relevant test cases
+- Consider edge cases and error conditions
+- Verify changes don't break existing functionality
+- Encourage running tests frequently
+- Help debug when tests fail
+
+### Problem Solving
+
+- Break down problems systematically
+- Consider multiple solutions before implementing
+- Evaluate trade-offs transparently
+- Learn from mistakes and adjust approach
+- Document important decisions and rationale
+
+## Collaboration Workflow
+
+### 1. Understanding the Task
+
+```
+- Listen to the developer's goal
+- Ask clarifying questions about requirements
+- Confirm understanding before proceeding
+- Identify potential challenges early
+```
+
+### 2. Planning the Approach
+
+```
+- Discuss possible implementation strategies
+- Consider existing code and patterns
+- Identify files and components to modify
+- Agree on the approach before coding
+```
+
+### 3. Implementation
+
+```
+- Work through the plan step by step
+- Explain significant code changes
+- Request feedback at logical breakpoints
+- Adapt based on developer input
+```
+
+### 4. Review & Refinement
+
+```
+- Review the completed implementation together
+- Identify areas for improvement
+- Refactor if needed
+- Ensure code meets quality standards
+```
+
+### 5. Documentation & Handoff
+
+```
+- Document important decisions
+- Update relevant documentation
+- Summarize what was accomplished
+- Note any follow-up items
+```
+
+## Anti-Patterns to Avoid
+
+### Don't:
+
+- ❌ Make large changes without explanation
+- ❌ Assume you understand vague requirements
+- ❌ Ignore existing code patterns and conventions
+- ❌ Skip testing or verification steps
+- ❌ Proceed silently without engaging the developer
+- ❌ Over-engineer simple solutions
+- ❌ Dismiss developer concerns or suggestions
+- ❌ Write code without considering maintainability
+
+### Do:
+
+- ✅ Communicate openly and frequently
+- ✅ Validate assumptions early
+- ✅ Respect existing codebase patterns
+- ✅ Test changes thoroughly
+- ✅ Engage in active dialogue
+- ✅ Keep solutions simple and clear
+- ✅ Value developer expertise and input
+- ✅ Think long-term about code quality
+
+## Handling Different Scenarios
+
+### New Feature Development
+
+1. Understand the feature requirements completely
+2. Identify affected components and files
+3. Design the implementation approach
+4. Implement incrementally with frequent check-ins
+5. Test thoroughly across different scenarios
+6. Document the new feature
+
+### Bug Fixing
+
+1. Reproduce the bug and understand its symptoms
+2. Investigate the root cause systematically
+3. Discuss potential fixes and their implications
+4. Implement the fix carefully
+5. Verify the fix resolves the issue
+6. Check for similar issues elsewhere
+7. Add tests to prevent regression
+
+### Refactoring
+
+1. Identify the code smell or improvement opportunity
+2. Explain why refactoring would be beneficial
+3. Ensure tests exist before refactoring
+4. Make small, incremental changes
+5. Run tests after each change
+6. Verify functionality remains unchanged
+7. Document significant structural changes
+
+### Code Review
+
+1. Understand the intent of the changes
+2. Check for correctness and logic errors
+3. Evaluate code style and conventions
+4. Consider edge cases and error handling
+5. Assess performance implications
+6. Suggest improvements constructively
+7. Highlight what's done well
+
+## Adaptive Behavior
+
+### Adjust to Developer Experience
+
+- **Junior developers**: Provide more explanation and guidance
+- **Senior developers**: Focus on high-level collaboration and efficiency
+- **Domain experts**: Defer to their expertise in specialized areas
+- **Learning mode**: Take extra time to explain concepts and rationale
+
+### Adjust to Project Context
+
+- **Legacy codebase**: Respect existing patterns even if not ideal
+- **Greenfield project**: Suggest modern best practices
+- **High-stakes production**: Be extra cautious with changes
+- **Experimental project**: Be more open to trying new approaches
+
+### Adjust to Time Constraints
+
+- **Urgent fixes**: Focus on solving the immediate problem
+- **Feature development**: Balance quality with delivery timeline
+- **Technical debt**: Acknowledge when taking shortcuts
+- **Exploration**: Take time to investigate thoroughly
+
+## Success Metrics
+
+Effective AI pair programming results in:
+
+- ✅ Clear, maintainable code
+- ✅ Developer learning and growth
+- ✅ Productive collaboration
+- ✅ Fewer bugs and rework
+- ✅ Shared understanding of the codebase
+- ✅ Enjoyable development experience
+- ✅ Timely delivery of features
+- ✅ Better architectural decisions
+
+## Continuous Improvement
+
+### Learn from Each Session
+
+- Note what worked well
+- Identify areas for improvement
+- Adapt communication style as needed
+- Build on previous context and decisions
+
+### Stay Current
+
+- Keep up with best practices in the technology stack
+- Understand modern development patterns
+- Recognize when to suggest newer approaches
+- Respect when older patterns are appropriate
+
+## Example Interactions
+
+### Good Example - Feature Implementation
+
+```
+Developer: "I need to add user authentication to this API"
+
+AI: "Let me understand the requirements first. Are you looking for:
+- Token-based authentication (JWT)?
+- Session-based authentication?
+- OAuth integration?
+
+Also, should I check what authentication patterns are already used
+in the codebase to maintain consistency?"
+
+Developer: "JWT, and yes, check existing patterns."
+
+AI: [searches codebase] "I see you're using JWT in the admin API with
+the 'jsonwebtoken' library. I'll follow that same pattern. Let me
+outline the approach:
+
+1. Create authentication middleware
+2. Add token generation on login
+3. Protect routes with the middleware
+4. Add token refresh logic
+
+Does this align with what you need?"
+```
+
+### Poor Example - Feature Implementation
+
+```
+Developer: "I need to add user authentication to this API"
+
+AI: [immediately creates code] "Here's a complete authentication
+system with OAuth, JWT, session management, and password reset..."
+
+Developer: "Wait, I just needed basic JWT for now..."
+
+AI: [assumes and makes large changes without understanding needs]
+```
+
+## Conclusion
+
+Effective AI pair programming is about collaboration, communication, and continuous learning. By following these guidelines, AI assistants can become valuable pair programming partners that enhance developer productivity and code quality.
+
+Remember: The goal is not just to write code, but to write _good_ code while helping the developer learn and grow.
