@@ -58,5 +58,11 @@
         "test-strategy",
         "contract-testing",
         "property-based-testing"
+    ],
+    "Performance & Reliability": [
+        "profiling",
+        "load-testing",
+        "resiliency-patterns",
+        "chaos-engineering"
     ]
 }

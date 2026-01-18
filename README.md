@@ -78,10 +78,10 @@ AI Agent Toolkit contains modular skill definitions that can be installed at use
 
 ### Performance & Reliability
 
-- profiling - Identify hotspots and optimize CPU/memory usage
-- load-testing - Capacity planning and regression prevention
-- resiliency-patterns - Circuit breakers, retries, timeouts, bulkheads
-- chaos-engineering - Failure injection to test resilience
+- [profiling](skills/profiling/SKILL.md) - Identify hotspots and optimize CPU/memory usage
+- [load-testing](skills/load-testing/SKILL.md) - Capacity planning and regression prevention
+- [resiliency-patterns](skills/resiliency-patterns/SKILL.md) - Circuit breakers, retries, timeouts, bulkheads
+- [chaos-engineering](skills/chaos-engineering/SKILL.md) - Failure injection to test resilience
 
 ### Documentation & DX
 
@@ -100,12 +100,13 @@ AI Agent Toolkit contains modular skill definitions that can be installed at use
 
 ## Progress Overview
 
-- **Completed**: 40/55 skills (73%)
+- **Completed**: 44/55 skills (80%)
 - **Phase 1 (Core Skills)**: 15/15 ✅ Complete
 - **Phase 2 (Architectural Foundations)**: 4/4 ✅ Complete
 - **Phase 5 (DevOps & Infrastructure)**: 4/4 ✅ Complete
 - **Phase 6 (Security & Compliance)**: 5/5 ✅ Complete
 - **Phase 7 (Testing & Quality)**: 4/4 ✅ Complete
+- **Phase 8 (Performance & Reliability)**: 4/4 ✅ Complete
 - **Frontend Web**: 6/6 ✅ Complete
 
 ## Installation Scopes
