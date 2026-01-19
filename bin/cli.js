@@ -8,6 +8,7 @@ const inquirer = require('inquirer');
 
 const SKILLS_DIR = path.join(__dirname, '..', 'src', 'skills');
 const CATEGORIES_PATH = path.join(SKILLS_DIR, '_categories.json');
+const AGENTS_DIR = path.join(__dirname, '..', 'src', 'agents');
 
 // Helper functions
 function getSkills() {
@@ -140,6 +141,62 @@ function showSkillPreview(skillName) {
     if (lines.length > 30) {
         console.log(chalk.gray(`\n... (${lines.length - 30} more lines)`));
     }
+}
+
+function getAgents() {
+    if (!fs.existsSync(AGENTS_DIR)) return [];
+
+    const entries = fs.readdirSync(AGENTS_DIR, { withFileTypes: true });
+    return entries
+        .filter(entry => entry.isFile() && entry.name.endsWith('.md'))
+        .map(entry => entry.name.replace('.md', ''))
+        .sort();
+}
+
+function getAgentInfo(agentName) {
+    const agentPath = path.join(AGENTS_DIR, `${agentName}.md`);
+    if (!fs.existsSync(agentPath)) {
+        return null;
+    }
+
+    const content = fs.readFileSync(agentPath, 'utf-8');
+    const lines = content.split('\n');
+
+    let name = agentName;
+    let description = '';
+
+    // Parse frontmatter
+    if (lines[0] === '---') {
+        for (let i = 1; i < lines.length; i++) {
+            const line = lines[i];
+            if (line === '---') break;
+
+            if (line.startsWith('name:')) {
+                name = line.substring(5).trim();
+            } else if (line.startsWith('description:')) {
+                description = line.substring(12).trim();
+            }
+        }
+    }
+
+    return { name, description, path: agentPath };
+}
+
+function formatAgentList(agents) {
+    console.log(chalk.bold.cyan('\n🤖 Available Agents:\n'));
+
+    agents.forEach(agent => {
+        const info = getAgentInfo(agent);
+        if (info) {
+            console.log(chalk.green(`  • ${info.name}`));
+            if (info.description) {
+                console.log(chalk.gray(`    ${info.description}`));
+            }
+        } else {
+            console.log(chalk.yellow(`  • ${agent}`));
+        }
+        console.log();
+    });
 }
 
 // Commands
@@ -335,6 +392,164 @@ program
 
         } catch (error) {
             console.error(chalk.red('Error copying skills:'), error.message);
+            process.exit(1);
+        }
+    });
+
+
+// Agent Commands
+const agent = program.command('agent')
+    .description('Manage AI agents');
+
+agent
+    .command('list')
+    .description('List all available agents')
+    .action(() => {
+        try {
+            const agents = getAgents();
+            if (agents.length === 0) {
+                console.log(chalk.yellow('\nNo agents found in src/agents.\n'));
+            } else {
+                formatAgentList(agents);
+                console.log(chalk.gray(`Total: ${agents.length} agents\n`));
+            }
+        } catch (error) {
+            console.error(chalk.red('Error listing agents:'), error.message);
+            process.exit(1);
+        }
+    });
+
+agent
+    .command('copy')
+    .description('Copy agents to user or project scope')
+    .option('-d, --dest <path>', 'Destination directory')
+    .option('-a, --all', 'Copy all agents')
+    .option('-s, --agents <agents...>', 'Specific agents to copy')
+    .action(async (options) => {
+        try {
+            let agentsToCopy = [];
+            const allAgents = getAgents();
+
+            if (allAgents.length === 0) {
+                console.log(chalk.red('\nNo agents found to copy.\n'));
+                return;
+            }
+
+            if (options.all) {
+                agentsToCopy = allAgents;
+            } else if (options.agents) {
+                agentsToCopy = options.agents;
+            } else {
+                // Interactive selection
+                const choices = allAgents.map(agent => {
+                    const info = getAgentInfo(agent);
+                    return {
+                        name: info ? `${info.name}${info.description ? ' - ' + info.description : ''}` : agent,
+                        value: agent,
+                        short: info ? info.name : agent,
+                    };
+                });
+
+                console.log(chalk.gray('\nUse Space to select, Enter to confirm. Press "a" to toggle all, "i" to invert selection.'));
+                const answers = await inquirer.prompt([
+                    {
+                        type: 'checkbox',
+                        name: 'agents',
+                        message: 'Select agents to copy:',
+                        choices,
+                        pageSize: 20,
+                        validate: (input) => (input && input.length > 0) ? true : 'Select at least one agent',
+                    },
+                ]);
+
+                agentsToCopy = answers.agents;
+
+                if (agentsToCopy.length === 0) {
+                    console.log(chalk.yellow('No agents selected'));
+                    return;
+                }
+
+                console.log(chalk.cyan(`\nSelected: ${agentsToCopy.length} agent(s)`));
+                const proceed = await inquirer.prompt([
+                    {
+                        type: 'confirm',
+                        name: 'confirm',
+                        message: 'Proceed to copy selected agents?',
+                        default: true,
+                    },
+                ]);
+                if (!proceed.confirm) {
+                    console.log(chalk.yellow('Copy cancelled'));
+                    return;
+                }
+            }
+
+            // Check manual flags empty case for non-interactive
+            if (agentsToCopy.length === 0) {
+                console.log(chalk.yellow('No agents specified to copy.'));
+                return;
+            }
+
+            let destDir = options.dest;
+            if (!destDir) {
+                const destAnswers = await inquirer.prompt([
+                    {
+                        type: 'list',
+                        name: 'scope',
+                        message: 'Choose installation scope:',
+                        choices: [
+                            { name: 'User scope (~/.claude/agents/)', value: 'user' },
+                            { name: 'Project scope (./.claude/agents/)', value: 'project' },
+                            { name: 'Custom path', value: 'custom' },
+                        ],
+                    },
+                ]);
+
+                if (destAnswers.scope === 'user') {
+                    destDir = path.join(require('os').homedir(), '.claude', 'agents');
+                } else if (destAnswers.scope === 'project') {
+                    destDir = path.join(process.cwd(), '.claude', 'agents');
+                } else {
+                    const pathAnswers = await inquirer.prompt([
+                        {
+                            type: 'input',
+                            name: 'path',
+                            message: 'Enter destination path:',
+                            default: process.cwd(),
+                        },
+                    ]);
+                    destDir = pathAnswers.path;
+                }
+            }
+
+            // Create destination directory
+            await fs.ensureDir(destDir);
+
+            console.log(chalk.cyan(`\n📦 Copying ${agentsToCopy.length} agent(s) to ${destDir}...\n`));
+
+            let successCount = 0;
+            let errorCount = 0;
+
+            for (const agentName of agentsToCopy) {
+                const srcPath = path.join(AGENTS_DIR, `${agentName}.md`);
+                const destPath = path.join(destDir, `${agentName}.md`);
+
+                try {
+                    await fs.copy(srcPath, destPath, { overwrite: true });
+                    console.log(chalk.green(`  ✓ ${agentName}`));
+                    successCount++;
+                } catch (error) {
+                    console.log(chalk.red(`  ✗ ${agentName}: ${error.message}`));
+                    errorCount++;
+                }
+            }
+
+            console.log();
+            console.log(chalk.bold(`Summary: ${chalk.green(successCount)} succeeded, ${chalk.red(errorCount)} failed`));
+            console.log(chalk.gray(`\nAgents copied to: ${destDir}\n`));
+
+        } catch (error) {
+            console.error(chalk.red('Error copying agents:'), error.message);
             process.exit(1);
         }
     });

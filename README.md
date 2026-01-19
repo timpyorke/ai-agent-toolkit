@@ -35,8 +35,8 @@ AI Agent Toolkit contains modular skill definitions that can be installed at use
 ### Frontend Web
 
 - [react-web-development](src/skills/react-web-development/SKILL.md) - Component architecture, hooks, patterns, and testing
-- [vue](src/skills/vue/SKILL.md) - Composition API, components, and ecosystem best practices
-- [angular](src/skills/angular/SKILL.md) - Modules, DI, RxJS, and enterprise app structure
+- [vue-web-development](src/skills/vue-web-development/SKILL.md) - Composition API, components, and ecosystem best practices
+- [angular-web-development](src/skills/angular-web-development/SKILL.md) - Modules, DI, RxJS, and enterprise app structure
 - [web-accessibility](src/skills/web-accessibility/SKILL.md) - WCAG compliance and inclusive UX patterns
 - [performance](src/skills/performance/SKILL.md) - Rendering, code-splitting, and lighthouse targets
 - [state-management](src/skills/state-management/SKILL.md) - Redux/Pinia/Zustand patterns and data flows
@@ -99,6 +99,11 @@ AI Agent Toolkit contains modular skill definitions that can be installed at use
 - [multi-agent-orchestration](src/skills/multi-agent-orchestration/SKILL.md) - Role design, structured messaging, handoffs, and coordination
 - [memory-context](src/skills/memory-context/SKILL.md) - Managing context windows, recall, summarization, and caching
 
+### AI Agents (Beta)
+
+- [code-reviewer](src/agents/code-reviewer.md) - Expert software engineer focused on code quality and security
+- [pair-programmer](src/agents/pair-programmer.md) - Collaborative coding partner for real-time development
+
 ## Installation Scopes
 
 | CLI    | User Scope          | Project Scope     |
@@ -156,27 +161,46 @@ Install the CLI tool to easily manage and deploy skills:
 # Install globally from npm
 npm install -g ai-agent-toolkit
 
-# Or install locally in development
-npm link
+# Or use directly with npx
+npx ai-agent-toolkit list
 ```
 
 ### CLI Commands
 
 ```bash
-# List all available skills
+# List all available skills (grouped by category)
 aat list
 
+# List all skills in flat format
+aat list --flat
+
 # Show detailed info about a skill
-aat info react
+aat info <skill-name>
 
 # Copy skills interactively (with prompts)
 aat copy
 
 # Copy all skills to user scope
+aat copy --all --scope user
+
+# Copy all skills to project scope
+aat copy --all --scope project
+
+# Copy all skills to custom destination
 aat copy --all --dest ~/.claude/skills/
 
-# Copy specific skills
-aat copy --skills react vue angular --dest ./.claude/skills/
+# Copy specific skills to a destination
+aat copy --skills react-web-development vue-web-development --dest ./.claude/skills/
+
+# List available agents
+aat agent list
+
+# Copy agents interactively
+aat agent copy
+
+# Copy specific agent
+aat agent copy --agents code-reviewer --dest ./.claude/agents/
+
 ```
 
 ## Usage
