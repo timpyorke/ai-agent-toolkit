@@ -1,5 +1,5 @@
 ---
-name: Observability
+name: observability
 description: Structured logging, metrics, distributed tracing, and SLOs for production systems monitoring
 ---
 
