@@ -37,15 +37,7 @@ This skill enables AI assistants to design high-quality APIs that are easy to us
 - Hierarchical nesting only when ownership is strict
 - Prefer `/{resource}/{id}` over query-only patterns
 
-```
-GET    /users
-GET    /users/{id}
-POST   /users
-PATCH  /users/{id}
-DELETE /users/{id}
-
-GET    /users/{id}/orders    # Ownership relation
-```
+See [Code Examples](examples.md#resource-modeling).
 
 ### Naming Conventions
 
@@ -64,18 +56,7 @@ GET    /users/{id}/orders    # Ownership relation
 
 ### Pagination, Filtering, Sorting
 
-```
-GET /users?limit=50&cursor=abc&sort=-created_at&filter=status:active
-
-Response:
-{
-  "data": [ ... ],
-  "page": {
-    "next_cursor": "def",
-    "limit": 50
-  }
-}
-```
+See [Code Examples](examples.md#pagination-filtering-sorting).
 
 - Cursor-based preferred for large sets
 - Use `sort` with `-field` for descending
@@ -83,17 +64,7 @@ Response:
 
 ### Error Format (Consistent)
 
-```
-{
-  "error": {
-    "code": "VALIDATION_ERROR",
-    "message": "email is invalid",
-    "details": [{ "field": "email", "issue": "invalid_format" }],
-    "request_id": "rq_123",
-    "timestamp": "2026-01-17T03:21:00Z"
-  }
-}
-```
+See [Code Examples](examples.md#response-shapes--error-format).
 
 ### Idempotency for Non-Safe Operations
 
@@ -108,19 +79,7 @@ Response:
 - Pagination via connections (Relay-style)
 - Avoid over-fetching with sensible field sets
 
-```
-type User {
-  id: ID!
-  name: String!
-  email: String!
-  createdAt: DateTime!
-}
-
-type Query {
-  user(id: ID!): User
-  users(first: Int, after: String): UserConnection!
-}
-```
+See [Code Examples](examples.md#graphql-design).
 
 ### Error Handling
 
@@ -142,38 +101,7 @@ type Query {
 
 ### OpenAPI (Recommended for REST)
 
-```
-openapi: 3.0.3
-info:
-  title: Example API
-  version: 1.0.0
-paths:
-  /users:
-    get:
-      summary: List users
-      parameters:
-        - in: query
-          name: limit
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserList'
-components:
-  schemas:
-    User:
-      type: object
-      required: [id, name, email]
-      properties:
-        id: { type: string }
-        name: { type: string }
-        email: { type: string, format: email }
-        created_at: { type: string, format: date-time }
-```
+See [Code Examples](examples.md#documentation).
 
 ### GraphQL SDL
 
@@ -194,24 +122,10 @@ components:
 
 ## Best Practices
 
-### Do:
+## Best Practices
 
-- ✅ Design from user journeys
-- ✅ Standardize responses and errors
-- ✅ Provide clear versioning/deprecation
-- ✅ Use contract-first with OpenAPI/SDL
-- ✅ Include idempotency for creates
-
-### Don't:
-
-- ❌ Overload endpoints with mixed responsibilities
-- ❌ Break contracts without deprecation
-- ❌ Expose internal error details
-- ❌ Use inconsistent naming/status codes
+See [Reference Material](references.md#best-practices).
 
 ## Quick Reference
 
-- REST: nouns, proper methods, consistent errors
-- GraphQL: clear types, dataloader, persisted queries
-- Versioning: `/v1` paths, deprecation headers
-- Docs: OpenAPI/SDL in repo, CI validation
+See [Reference Material](references.md#quick-reference).
