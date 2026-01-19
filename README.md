@@ -34,7 +34,7 @@ AI Agent Toolkit contains modular skill definitions that can be installed at use
 
 ### Frontend Web
 
-- [react](src/skills/react/SKILL.md) - Component architecture, hooks, patterns, and testing
+- [react-web-development](src/skills/react-web-development/SKILL.md) - Component architecture, hooks, patterns, and testing
 - [vue](src/skills/vue/SKILL.md) - Composition API, components, and ecosystem best practices
 - [angular](src/skills/angular/SKILL.md) - Modules, DI, RxJS, and enterprise app structure
 - [web-accessibility](src/skills/web-accessibility/SKILL.md) - WCAG compliance and inclusive UX patterns
