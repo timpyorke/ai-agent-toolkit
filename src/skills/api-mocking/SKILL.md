@@ -39,43 +39,20 @@ This skill enables AI assistants to set up reliable API mocks that accelerate de
 
 ### OpenAPI-Driven
 
-```bash
-# Prism: Mock OpenAPI locally
-npm install -g @stoplight/prism-cli
-prism mock openapi.yaml --port 4010
-```
+See [Code Examples](examples.md#openapi-driven-mocks).
 
 ### GraphQL Mocks
 
 - Apollo Server with mock resolvers
 - GraphQL Tools `addMocksToSchema`
 
-```js
-import { makeExecutableSchema } from "@graphql-tools/schema";
-import { addMocksToSchema } from "@graphql-tools/mock";
-
-const sdl = `
-  type User { id: ID!, name: String!, email: String! }
-  type Query { users: [User!]! }
-`;
-
-const schema = makeExecutableSchema({ typeDefs: sdl });
-const mockedSchema = addMocksToSchema({ schema });
-```
+See [Code Examples](examples.md#graphql-mocks).
 
 ## Fixtures & Scenarios
 
 ### Organize Mock Data
 
-```
-mocks/
-├── users.json
-├── orders.json
-└── scenarios/
-    ├── happy-path.json
-    ├── rate-limit.json
-    └── server-error.json
-```
+See [Code Examples](examples.md#fixtures--scenarios).
 
 ### Scenario Selection
 
@@ -85,20 +62,7 @@ mocks/
 
 ## Error & Latency Simulation
 
-```js
-app.get("/users", (req, res) => {
-  const scenario = req.headers["x-mock-scenario"];
-  if (scenario === "rate-limit") {
-    return res.status(429).json({ error: { code: "RATE_LIMIT" } });
-  }
-  setTimeout(
-    () => {
-      res.json(usersFixture);
-    },
-    300 + Math.random() * 700,
-  ); // 300-1000ms
-});
-```
+See [Code Examples](examples.md#error--latency-simulation).
 
 ## Stateful Mocks
 
@@ -119,23 +83,8 @@ app.get("/users", (req, res) => {
 
 ## Best Practices
 
-### Do:
-
-- ✅ Put mock data in repo with code owners
-- ✅ Use contract-first validation in CI
-- ✅ Document scenarios and how to toggle
-- ✅ Simulate realistic latency and errors
-
-### Don't:
-
-- ❌ Hardcode mocks inside app logic
-- ❌ Drift mock contract from real API
-- ❌ Skip error scenarios (5xx/4xx, timeouts)
-- ❌ Leave mocks enabled in production
+See [Reference Material](references.md#best-practices).
 
 ## Quick Reference
 
-- Prism/WireMock/JSON Server for REST
-- MSW for browser/interception
-- GraphQL Tools for schema-based mocks
-- Scenario toggles via header/query/env
+See [Reference Material](references.md#quick-reference).

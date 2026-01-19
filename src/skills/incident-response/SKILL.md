@@ -1,100 +1,39 @@
 ---
 name: Incident Response
-description: On-call procedures, incident management, runbooks, and blameless postmortems for production operations
+description: Manage production incidents effectively with defined severity levels, roles, communication plans, and post-mortems
 ---
 
-# Incident Response Skill
+# 🚨 Incident Response Skill
 
-Manage production incidents with clear procedures, effective communication, and continuous improvement.
+## Overview
 
-## Incident Severity Levels
+Handle production incidents with a structured approach. Define severity levels, assign roles, mitigate impact quickly, and learn from failure through blameless post-mortems.
 
-### Severity Definitions
+## Core Principles
 
-```yaml
-SEV0:
-  name: Critical
-  description: Complete service outage or data loss
-  examples:
-    - Service completely unavailable
-    - Data corruption or loss
-    - Security breach
-  response_time: Immediate (< 5 minutes)
-  escalation: Page all on-call engineers
-  communication: Every 30 minutes
+See [Reference Material](references.md#core-principles).
 
-SEV1:
-  name: High
-  description: Major functionality unavailable
-  examples:
-    - Core feature broken for all users
-    - Significant performance degradation
-    - Payment processing down
-  response_time: < 15 minutes
-  escalation: Page primary on-call
-  communication: Every hour
+## Severity Levels
 
-SEV2:
-  name: Medium
-  description: Partial functionality impaired
-  examples:
-    - Non-core feature broken
-    - Performance issues affecting subset of users
-    - Intermittent errors
-  response_time: < 1 hour
-  escalation: Alert on-call team
-  communication: Every 4 hours
+See [Reference Material](references.md#severity-levels).
 
-SEV3:
-  name: Low
-  description: Minor issue with workaround
-  examples:
-    - UI glitch
-    - Non-critical API slowness
-    - Monitoring alert false positive
-  response_time: Next business day
-  escalation: Create ticket
-  communication: As needed
-```
+## Roles & Lifecycle
 
-## On-Call Rotation
+See [Reference Material](references.md#roles--responsibilities) and [Reference Material](references.md#incident-lifecycle).
 
-### PagerDuty Schedule
+## Templates
 
-```yaml
-# pagerduty-schedule.yaml
-schedule:
-  name: Engineering On-Call
-  time_zone: America/New_York
+### Runbooks & Communication
 
-  layers:
-    - name: Primary
-      rotation_virtual_start: "2024-01-01T00:00:00"
-      rotation_turn_length_seconds: 604800 # 1 week
-      users:
-        - user_1
-        - user_2
-        - user_3
+See [Examples](examples.md#incident-runbooks).
 
-    - name: Secondary
-      rotation_virtual_start: "2024-01-01T00:00:00"
-      rotation_turn_length_seconds: 604800
-      users:
-        - user_4
-        - user_5
-        - user_6
+### Post-Mortem
 
-  escalation_policies:
-    - name: Engineering Escalation
-      escalation_rules:
-        - escalation_delay_in_minutes: 0
-          targets:
-            - type: schedule_reference
-              id: primary_schedule
-        - escalation_delay_in_minutes: 15
-          targets:
-            - type: schedule_reference
-              id: secondary_schedule
+See [Examples](examples.md#post-mortem).
+
+## Automation
+
+See [Examples](examples.md#automation-scripts).
         - escalation_delay_in_minutes: 30
           targets:
             - type: user_reference
