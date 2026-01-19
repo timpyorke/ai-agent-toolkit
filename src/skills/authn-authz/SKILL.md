@@ -54,39 +54,13 @@ This skill covers the implementation of Authentication (AuthN - who are you?) an
 ### Implementation Pattern
 
 **Middleware/Guard:**
-```typescript
-// Protect route with required permission
-app.post('/api/users', requirePermission('users:create'), createUser);
 
-function requirePermission(perm) {
-  return (req, res, next) => {
-    if (!req.user.permissions.includes(perm)) {
-      return res.status(403).json({ error: 'Forsaken' });
-    }
-    next();
-  };
-}
-```
+See [Code Examples](examples.md#authorization-implementation-pattern).
 
 ## Best Practices
 
-### Do:
-- ✅ Use established identity providers (Auth0 leading, Cognito, Firebase Auth) where possible.
-- ✅ Store tokens securely (HttpOnly cookies preferred over localStorage).
-- ✅ Rotate secrets and keys regularly.
-- ✅ Implement "Least Privilege" defaults.
-
-### Don't:
-- ❌ Roll your own crypto or auth logic.
-- ❌ Hardcode secrets/keys.
-- ❌ Trust claims in unsigned/unverified tokens.
-- ❌ Confuse Authentication with Authorization.
+See [Reference Material](references.md#best-practices).
 
 ## Checklist
 
-- [ ] Is AuthN handled by a trusted provider or standard library?
-- [ ] Are passwords hashed properly (Argon2/bcrypt)?
-- [ ] Is MFA available/enforced for sensitive accounts?
-- [ ] Are sensitive cookies marked HttpOnly/Secure/SameSite?
-- [ ] Is access denied by default (allow-list)?
-- [ ] Are permissions checked at the backend (not just hidden in UI)?
+See [Reference Material](references.md#checklist).

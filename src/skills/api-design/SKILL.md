@@ -122,8 +122,6 @@ See [Code Examples](examples.md#documentation).
 
 ## Best Practices
 
-## Best Practices
-
 See [Reference Material](references.md#best-practices).
 
 ## Quick Reference

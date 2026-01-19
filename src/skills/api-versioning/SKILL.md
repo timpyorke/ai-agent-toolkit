@@ -100,8 +100,6 @@ See [Code Examples](examples.md#version-compatibility-tests).
 
 See [Code Examples](examples.md#client-sdk-versioning).
 
-## Best Practices
-
 ### Best Practices
 
 See [Reference Material](references.md#best-practices).

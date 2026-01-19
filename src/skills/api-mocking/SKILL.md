@@ -83,8 +83,6 @@ See [Code Examples](examples.md#error--latency-simulation).
 
 ## Best Practices
 
-## Best Practices
-
 See [Reference Material](references.md#best-practices).
 
 ## Quick Reference
