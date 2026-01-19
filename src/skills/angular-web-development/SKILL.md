@@ -1,5 +1,5 @@
 ---
-name: Angular Web Development
+name: angular-web-development
 description: Build robust Angular apps with modular architecture, DI, RxJS, NgRx, testing, and performance tuning
 ---
 

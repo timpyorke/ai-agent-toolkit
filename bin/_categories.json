@@ -21,10 +21,10 @@
         "messaging"
     ],
     "Frontend Web": [
-        "react",
-        "vue",
-        "angular",
-        "accessibility",
+        "react-web-development",
+        "vue-web-development",
+        "angular-web-development",
+        "web-accessibility",
         "performance",
         "state-management"
     ],
