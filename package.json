@@ -1,6 +1,6 @@
 {
     "name": "ai-agent-toolkit",
-    "version": "1.0.0",
+    "version": "0.1.0",
     "description": "A comprehensive toolkit of reusable skills for AI coding agents",
     "main": "index.js",
     "bin": {
